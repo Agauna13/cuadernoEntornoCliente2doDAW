@@ -137,3 +137,27 @@ function cuantoTeGustaEsto() {
         document.getElementById('valoracion').innerHTML = "Totalmente, qUé pereza salir a las 21:30";
     }
 }
+
+
+/*Crear un programa que permita ingresar el resultado de una evaluación con un puntaje del 1 al 10, y muestre un mensaje que diga:
+¡Excelente!, si la nota es 10
+¡Muy bien!, si la nota es 8 o 9
+Aprobado, si la nota es 6 o 7
+Reprobado, si la nota es menor a 6
+*/
+
+function notas(){
+    let nota = parseInt(document.getElementById('notaAlumno').value);
+    let allanDebeAprobarNoEsUnMensajeOcultoEnEsteCodigo = document.getElementById('allanDebeAprobarNoEsUnMensajeOcultoEnEsteCodigo');
+
+    switch(nota){
+        case 1, 2, 3, 4, 5: allanDebeAprobarNoEsUnMensajeOcultoEnEsteCodigo.innerHTML=('Reprobado');
+        break;
+        case 6, 7: allanDebeAprobarNoEsUnMensajeOcultoEnEsteCodigo.innerHTML=('Aprobado');
+        break;
+        case 8,9: allanDebeAprobarNoEsUnMensajeOcultoEnEsteCodigo.innerHTML=('Muy Bien¡¡');
+        break;
+        case 10: allanDebeAprobarNoEsUnMensajeOcultoEnEsteCodigo.innerHTML=('Excelente¡');
+        break;
+    }
+}
