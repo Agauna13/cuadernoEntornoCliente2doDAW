@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>Actividades Unidad 1</h1>
+
+
+    <div class="contenedor">
+        <h3>Calculadora de paga</h3>
+        <input id="horasTrabajadas" type="number" placeholder="Introduzca las horas trabajadas">
+        <input id="precioPorHora" type="number" placeholder="Introduzca su precio por hora">
+        <button onclick="calcSalario()">Calcula</button>
+
+        <h3 id = salario></h3>
+    </div>
+
+    <div class="contenedor">
+        <h3>Calculadora de IMC</h3>
+        <input id="altura" type="number" placeholder="Introduzca su altura en m">
+        <input id="peso" type="number" placeholder="Introduzca su peso en kg">
+        <button onclick="calcIMC()">Calcula</button>
+        <h3 id = imc></h3>
+    </div>
+
+
+    <div class="contenedor">
+        <h3>Programa DIVIDIDOR¡</h3>
+        <input id="numA" type="number" placeholder="Introduzca su primer DIVIDIDOR">
+        <input id="numB" type="number" placeholder="Introduzca su segundo DIVIDIDOR">
+        <button onclick="dividide()">Calcula</button>
+        <h3 id = dividision></h3>
+    </div>
+
+    <div class="contenedor">
+        <h3>Calculadora de interés</h3>
+        <input id="inversion" type="number" placeholder="Introduzca la cantidad a invertir">
+        <input id="interesAnual" type="number" placeholder="Introduzca el interés anual">
+        <input id="tiempoEnAños" type="number" placeholder="Introduzca el tiempo en años">
+        <button onclick="invierte()">Calcula</button>
+        <h3 id = ganancias></h3>
+    </div>
+
+    <div class="contenedor">
+        <h3>Calculadora de interés</h3>
+        <input id="inversion" type="number" placeholder="Introduzca la cantidad a invertir">
+        <input id="interesAnual" type="number" placeholder="Introduzca el interés anual">
+        <input id="tiempoEnAños" type="number" placeholder="Introduzca el tiempo en años">
+        <button onclick="invierte()">Calcula</button>
+        <h3 id = ganancias></h3>
+    </div>
+
+    <div class="contenedor">
+        <h3>Calcula el peso de tus muñecas y payasos</h3>
+        <input id="muñecas" type="number" placeholder="Introduzca la cantidad de muñecas">
+        <input id="payasos" type="number" placeholder="Introduzca la cantidad de payasos">
+        <button onclick="payasos()">Calcula</button>
+        <h3 id = pesoPayaso></h3>
+    </div>
+
+    <div class="contenedor">
+        <h3>Cuanto hemos perdido por vender pan viejo</h3>
+        <input id="panNuevo" type="number" placeholder="Introduzca la cantidad de panes nuevos">
+        <input id="panViejo" type="number" placeholder="Introduzca la cantidad de panes viejos">
+        <button onclick="panMohoso()">Calcula</button>
+        <h3 id = perdidas></h3>
+    </div>
+
+    <div class="contenedor">
+        <h3>Saber y ganar</h3>
+        <input id="p1" type="text" placeholder="cual es la capital de francia?">
+        <input id="p2" type="text" placeholder="cual es la capital de alemania?">
+        <input id="p3" type="text" placeholder="cual es la capital de italia?">
+        <button onclick="saberYganar()">Calcula</button>
+        <h3 id = saber></h3>
+    </div>
+
+    <div class="contenedor">
+        <h3>Log in</h3>
+        <input id="userName" type="text" placeholder="nombre de usuario">
+        <input id="password" type="text" placeholder="Contraseña">
+        
+        <button onclick="logIn()">Log In</button>
+        <h3 id = login></h3>
+    </div>
+    
+
+
+    <div class="contenedor">
+        <h3>Valoración</h3>
+        <input id="valoracionCliente"  placeholder="Del 1 al 10, cuanto te gusta salir pronto de clase?">
+               
+        <button onclick="cuantoTeGustaEsto()">Envía</button>
+        <h3 id = "valoracion"></h3>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
