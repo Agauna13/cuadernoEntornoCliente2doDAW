@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Calculadora</h1>
+    <div class="contenedor">
+        <input type="numero"  id="primerNumero" placeholder="Introduzca su primer número">
+        <select id="opcion">
+            <option value="+"> + </option>
+            <option value="-"> - </option>
+            <option value="*"> * </option>
+            <option value="/"> / </option>
+            <option value="**"> ^ </option>
+            <option value="%"> mod </option>
+        </select>
+        <input type="numero" id="segundoNumero" placeholder = "Introduzca su segundo numero">
+        <button id="igual" onclick="calcula()"> = </button>
+        <h3>Resultado: <div id="resultado"></div></h3>
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>

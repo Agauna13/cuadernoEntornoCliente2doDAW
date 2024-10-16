@@ -1,0 +1,59 @@
+body{
+    background-color: black;
+    color: white;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+
+h1{
+    text-align: center;
+}
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    gap: 25px;
+    margin: 0 auto;
+}
+
+.contenedor button{
+    width: 30%;
+    width: 30px;
+    height: 15px;
+    color: white;
+    background: none;
+    font-weight: bolder;
+    text-align: center;
+
+}
+
+.contenedor button:hover{
+    transform:scale(1.1);
+}
+
+.contenedor select{
+    text-align: center;
+    width: 30%;
+    border: none;
+    background: none;
+    color: white;
+    font-weight: bolder;
+    background-color: black;
+}
+
+.contenedor input{
+    background: none;
+    color: white;
+    text-align: center;
+    font-weight: bolder;
+    height: 25px;
+
+}
+
+
+#resultado{
+    color: white;
+    display: flex;
+    flex-direction: row;
+}
