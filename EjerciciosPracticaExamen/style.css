@@ -1,0 +1,11 @@
+.agrupamiento{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    width: fit-content  ;
+}
+
+.agrupamiento:hover{
+    background-color: white;
+    color: black;
+}
