@@ -29,8 +29,9 @@ function bienvenida(){
     const ventanaEmergente = window.open('', 'ventanaEmergente', `width=300, height=200, left=${leftSide}, top=${topSide}`);
     ventanaEmergente.document.write("<h1> Bienvenido!! </h1>");
 
-    const botonAtras = document.getElementById('atras');
+    const botonAtras = document.getElementById('atras');  //Botón simulado ya que no he encontrado un método para desactivar el botón de atrás o circunvalar eso de ninguna manera. (con window.location o nada por el estilo)
     botonAtras.disabled = true;
+
 
     
     const cerrar = setTimeout(()=>{
