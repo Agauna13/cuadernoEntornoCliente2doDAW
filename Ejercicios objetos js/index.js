@@ -24,9 +24,9 @@ function countdown(event) {
 
 
 function bienvenida(){
-    let left = (window.innewWidth + 200) /2;
-    let top = (window.innerHeight - 150);
-    const ventanaEmergente = window.open('', 'ventanaEmergente', `width=300, height=200, left=${left}, top=${top}`);
+    let leftSide = (window.innerWidth - 200) / 2;
+    let topSide = (window.innerHeight - 150) / 2;
+    const ventanaEmergente = window.open('', 'ventanaEmergente', `width=300, height=200, left=${leftSide}, top=${topSide}`);
     ventanaEmergente.document.write("<h1> Bienvenido!! </h1>");
 
     const botonAtras = document.getElementById('atras');
@@ -36,5 +36,5 @@ function bienvenida(){
     const cerrar = setTimeout(()=>{
         ventanaEmergente.close();
         botonAtras.disabled = false;
-    }, 30000);
+    }, 3000);
 }
