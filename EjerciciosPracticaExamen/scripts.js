@@ -77,6 +77,12 @@ setTimeout(() => {
 
 //seInterval
 
+setInterval(() => {
+    //logica
+}, 1000);//1s
+
+clearInterval(/*nombre de la variable donde hemos guardado el intervalo*/);
+
 
 
 
