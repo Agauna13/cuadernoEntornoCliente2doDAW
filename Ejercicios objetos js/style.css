@@ -1,0 +1,40 @@
+body {
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px !important;
+    height: auto;
+    background-color: black;
+    text-align: justify;
+    margin: 0 auto;
+    align-content: center;
+    justify-content: center;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+
+button {
+    background-color: black;
+    border: none;
+    color: white;
+}
+button:hover {
+    border: 2px solid white;
+    padding: 1rem;
+    transform: rotate(360deg) scale(1.2);
+    transition: all 0.3s ease-in-out 0s;
+
+}
+
+input{
+    background-color: inherit;
+    color: white;
+    border: none;
+    width: 20vw;
+}
+.ejercicio1, .ejercicio2{
+    padding-bottom: 3rem;
+    border-bottom: 3px dashed white;
+}
+

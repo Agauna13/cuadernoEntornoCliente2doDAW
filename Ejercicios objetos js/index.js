@@ -21,3 +21,20 @@ function countdown(event) {
         }
     }, 1000);
 }
+
+
+function bienvenida(){
+    let left = (window.innewWidth + 200) /2;
+    let top = (window.innerHeight - 150);
+    const ventanaEmergente = window.open('', 'ventanaEmergente', `width=300, height=200, left=${left}, top=${top}`);
+    ventanaEmergente.document.write("<h1> Bienvenido!! </h1>");
+
+    const botonAtras = document.getElementById('atras');
+    botonAtras.disabled = true;
+
+    
+    const cerrar = setTimeout(()=>{
+        ventanaEmergente.close();
+        botonAtras.disabled = false;
+    }, 30000);
+}

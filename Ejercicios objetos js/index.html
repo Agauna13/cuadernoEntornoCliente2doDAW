@@ -1,16 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
-<body>
-    <form action="">
-        <input type="number" id="segundos" placeholder="Tiempo en segundos para la cuenta atrás">
-        <button id="temporizador" onclick="countdown(event)">Cuenta Atrás</button>
-    </form>
+
+<body onload="bienvenida()">
+    <div class="ejercicio1">
+        <h1>Ejercicio 1</h1>
+        <p>Crear una función llamada temporizadorAlerta que tome un número entero segundos como argumento.
+            La función debe mostrar una alerta con el mensaje "Tiempo completado" después de los segundos especificados.
+            Mientras el temporizador esté corriendo, el título de la página (usando document.title) debe actualizarse
+            cada segundo con el tiempo restante en formato Restan: X segundos. Al completarse el temporizador,
+            restablecer el título original de la página.</p>
+
+        <form action="">
+            <input type="number" id="segundos" placeholder="Tiempo en segundos para la cuenta atrás">
+            <button id="temporizador" onclick="countdown(event)">Cuenta Atrás</button>
+        </form>
+    </div>
+
+    <div class="ejercicio2">
+        <h1>Ejercicio 2</h1>
+        <p>Crear una función llamada mostrarVentana que se ejecute automáticamente al recargar la página.
+            La función debe abrir una nueva ventana emergente de tamaño reducido (300px de ancho y 200px de alto)
+            centrada en la pantalla, que contenga un mensaje de bienvenida, por ejemplo, "Bienvenido a nuestra página".
+            La ventana emergente debe cerrarse automáticamente después de 3 segundos.
+            Mientras la ventana esté abierta, el botón "Atrás" del navegador en la ventana principal debe quedar
+            deshabilitado (simulado), y al cerrar la ventana emergente, debe reactivarse.
+        </p>
+
+        <button id="atras" onclick="history.back(-1)" disbled> Go Back </button>
+    </div>
 
     <script src="index.js"></script>
 </body>
+
 </html>
