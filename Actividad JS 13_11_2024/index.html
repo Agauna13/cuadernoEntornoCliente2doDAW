@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAREA DWEC UT3</title>
+</head>
+<body onload="generarDatos()">
+    <div id="resultado" style="width:100vw; height: 100vh">
+        
+    </div>
+    <button id="popUp" onclick = "popUp()"> Pulsa Para Ver Datos</button>
+
+</body>
+    <script>
+        var datos = ["Allan Mariano", "Gauna Adamson", 7, 7, 1990];
+        function generarDatos(){
+            let lenNombre = (datos[0].length + datos[1].length); //para que no cuente los espacios o guiones como parte de mi nombre (de forma sencilla).
+            console.log(lenNombre);
+            let nombreMayus = (datos[0] + " " + datos[1]).toUpperCase();//mayus
+
+            let primeraA = 0;  //Primera A de mi nombre
+
+            for(let i = 0; i < datos[0].length; i++){
+                if(datos[0].charAt(i) === 'a' || datos[0].charAt(i) ==='A'){
+                    primeraA += (i + 1);
+                    break;
+                }else('no se encuentra A ni a');
+
+            }
+
+            let ultimaA = 24;// Última A de mi nombre
+             
+            for(let i = datos[1].length - 1; i >= 0; i--){
+                if(datos[1].charAt(i) === 'a' || datos[1].charAt(i) ==='A'){
+                    ultimaA -= (i);
+                    break;
+                }else('no se encuentra A ni a');
+
+            }
+
+            let nombreRecortado = '';  //nombre sin las 3 primeras letras All -> an Mariano
+
+            for(let i = 3; i < datos[0].length; i++){
+                nombreRecortado += datos[0].charAt(i);
+            }
+
+
+            let año = new Date().getFullYear(); //Para saber el año en el que estamos en el formato que toca
+            const edad = año - parseInt(datos[4]); // Para mostrar mi edad
+
+            let raizEdad =  Math.sqrt(edad);
+
+            
+            let hoy = new Date();
+            let cumpleaños = new Date(2025, datos[3], datos[2], );
+            let faltaHastaCumple =  cumpleaños - hoy; //Días restantes Hasta Mi cumple
+
+            let diferenciaDias = Math.ceil(faltaHastaCumple / (1000 * 60 * 60 * 24));
+
+            
+            datos.splice(2, 3, 4); //Eliminamos Posiciones que contienen fecha de nacimiento
+            datos.push(edad); //Metemos la variable edad guardada al final
+
+
+            let res = `<h1 style = 'text-align:center;'> TAREA DWEC UT3 </h1><hr/>
+                    <p>Buenos Días, mi nombre es ${datos[0] + '' + datos[1]} mi nombre completo tiene ${lenNombre} con espacios incluidos, todo en matus sería ${nombreMayus}, La primera letra A de tu (nombre completo) está en la posición: ${primeraA},  La última letra A de tu (nombre completo) está en la posición: ${ultimaA}, Tu nombre menos las 3 primeras letras es: ${nombreRecortado}, Tu edad es: ${edad}</p>`;
+
+            document.getElementById("resultado").innerHTML = res;
+
+            console.log(primeraA);
+            console.log(ultimaA);
+            console.log(nombreRecortado);
+            console.log(edad);
+            console.log(diferenciaDias);
+            console.log(raizEdad);
+            console.log(edad);
+
+        }
+
+        function popUp(){
+            let nuevaVentana = window.open("", "_blank", "width=600,height=400");
+            nuevaVentana.document.write(`
+            <h2>Hola mi nombre es ${datos[0]}, mi apellido es ${datos[1]} y tengo ${edad} años</h2>
+            <h3>Has seleccionado la palabra "${palabraSeleccionada}" de la ventana principal</h3>
+            <p>URL Completa: ${window.location.href}</p>
+            <p>Protocolo utilizado: ${window.location.protocol}</p>
+            <p>Nombre en código del navegador: ${navigator.appCodeName}</p>
+            <p>El número de urls disponibles en el historial es ${history.length}</p>
+            `);
+        }
+
+    </script>
+
+</html>
