@@ -16,3 +16,14 @@ console.log(b);
 /*let j = square(5); //no debería darnos el resultado ya que no nos encontramos dentro del ámbito de la funcion square
 console.log(j);*/
 
+
+function ask(question, yes, no) {
+    if (confirm(question)) yes();
+    else no();
+  }
+  
+  ask(
+    "Do you agree?",
+    () => { alert("You agreed."); },
+    () => { alert("You canceled the execution."); }//sintaxis de una función flecha
+  );
