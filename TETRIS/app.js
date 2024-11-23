@@ -1,153 +1,264 @@
-//Declaración de objetos y arrays comunes a todo el código
-function construirTablero() {
-  let tablero = [];
-  for (let i = 0; i < 10; i++) {
-    let fila = [];
-    for (let j = 0; j < 20; j++) {
-      fila.push(0);
-    }
-    tablero.push(fila);
-  }
-  return tablero;
-}
+const canvas = document.getElementById('tetris');
+const lienzo = canvas.getContext('2d');
+const celda = 30;
+const filas = 20;
+const columnas = 10;
+var puntuacion = 0;
+var dificultad = 500;
 
-var tablero = construirTablero();
 
-let barra = {
+var barra = {
   nombre: "barra",
   forma: [[1], [1], [1], [1]],
-  probabilidad: 0.2,
+  probabilidad: 0.3,
   color: "blue",
-};
+  anguloRotado: 0
+}
 
-let cuadrado = {
+var cuadrado = {
   nombre: "cuadrado",
   forma: [
     [1, 1],
-    [1, 1],
+    [1, 1]
   ],
-  probabilidad: 0.2,
+  probabilidad: 0.3,
   color: "red",
-};
+  anguloRotado: 0
+}
 
-let ele = {
+var rayito = {
+  nombre: "rayito",
+  forma: [
+    [1, 0],
+    [1, 1],
+    [0, 1],
+  ],
+  probabilidad: 0.3,
+  color: "green",
+  anguloRotado: 0
+}
+var laQueTieneFormitaDeT = {
+  nombre: "laQueTieneFormitaDeT",
+  forma: [
+    [1, 0],
+    [1, 1],
+    [1, 0],
+  ],
+  probabilidad: 0.3,
+  color: "orange",
+  anguloRotado: 0
+}
+
+var ele = {
   nombre: "ele",
   forma: [
     [1, 0],
     [1, 0],
-    [1, 1],
+    [1, 1]
   ],
   probabilidad: 0.3,
   color: "pink",
-};
+  anguloRotado: 0
+}
 
-let rayitoVerde = {
-  nombre: "rayitoVerde",
-  forma: [
-    [1, 1, 0],
-    [0, 1, 1],
-  ],
-  probabilidad: 0.4,
-  color: "green",
-};
+var piezas = [barra, cuadrado, rayito, laQueTieneFormitaDeT, ele];
 
-let laQueTieneFormitaDeT = {
-  nombre: "laQueTieneFormitaDeT",
-  forma: [
-    [0, 1, 0],
-    [1, 1, 1],
-  ],
-  probabilidad: 0.3,
-  color: "orange",
-};
+const tablero = arrayTablero();
 
-var piezas = [barra, cuadrado, rayitoVerde, ele, laQueTieneFormitaDeT];
-const canvas = document.getElementById("tetris");
-const lienzo = canvas.getContext("2d");
-const filas = 20;
-const columnas = 10;
-const ladoCelda = 30;
-var puntuacion = 0;
-//var nuevaPieza = generarPieza();
-
-//función para dibujar el tablero, podemos usar esta funcion varias veces para el movimiento de las piezas
-function dibujarTablero(colorPieza) {
-  for (let i = 0; i < 10; i++) {
-    for (let j = 0; j < 20; j++) {
-      if (tablero[i][j] == 0) {
-        lienzo.fillStyle = "black";
-      } else if (tablero[i][j] == 1) {
-        lienzo.fillStyle = colorPieza;
-      } else {
-        tablero.fillStyle = "gray";
-      }
-      lienzo.fillRect(i * 30, j * 30, 30, 30);
+function arrayTablero() {
+  let arr = []
+  for (let i = 0; i < columnas; i++) {
+    let fila = [];
+    for (let j = 0; j < filas; j++) {
+      fila.push(0);
+    }
+    arr.push(fila);
+  }
+  return arr;
+}
+function dibujarTablero() {
+  for (let i = 0; i < columnas; i++) {
+    for (let j = 0; j < filas; j++) {
+      lienzo.fillStyle = tablero[i][j] == 0 ? "black" : "gray";
+      lienzo.strokeStyle = "white";
+      lienzo.fillRect(i * celda, j * celda, celda, celda);
+      lienzo.strokeRect(i * celda, j * celda, celda, celda);
     }
   }
 }
 
-//Funcion para elegir una pieza en función de su probabilidad
-function generarPieza() {
-    let probabilidadAcumulada = 0;
-    const rango = piezas.map((pieza) => {
-      probabilidadAcumulada += pieza.probabilidad;
-      return { ...pieza, rango: probabilidadAcumulada };
-    });
 
-    let numeroAleatorio = Math.random();
-
-    for (let r of rango) {
-      if (numeroAleatorio <= r.rango) {
-        return r;
-      }
-    }
-  }
-
-//Funcion para dibujar la pieza en función de unas coordenadas.
-function colocarPieza(pieza, coordenadaX, coordenadaY) {
-  const inicioX = coordenadaX;
-  const inicioY = coordenadaY;
+function dibujarPieza(pieza, x, y) {
   for (let i = 0; i < pieza.forma.length; i++) {
     for (let j = 0; j < pieza.forma[i].length; j++) {
       if (pieza.forma[i][j] === 1) {
-        tablero[inicioX + i][inicioY + j] = 1;
+        lienzo.fillStyle = pieza.color;
+        lienzo.fillRect((x + i) * celda, (y + j) * celda, celda, celda);
       }
     }
   }
 }
 
-function chequearColisiones(pieza, x, y) {}
+function generarPieza() {
+  let probabilidadAcumulada = 0;
+  const rango = piezas.map((pieza) => {
+    probabilidadAcumulada += pieza.probabilidad;
+    return { ...pieza, rango: probabilidadAcumulada };
+  });
 
-function eliminarLinea() {
-  for (let i = 0; i < tablero.length; i++) {
-    let total = 0;
-    let sumaFila = tablero[i].reduce(
-      (acumulador, current) => acumulador + current,
-      total
-    );
+  let numeroAleatorio = Math.random();
 
-    if (total >= 10) {
-      tablero.splice(tablero[i], 1);
-      puntuacion += 10;
+  for (let r of rango) {
+    if (numeroAleatorio <= r.rango) {
+      return r;
+    }
+
+  }
+
+}
+function chequearColisiones(pieza, x, y) {
+  for (let i = 0; i < pieza.forma.length; i++) {
+    for (let j = 0; j < pieza.forma[i].length; j++) {
+      if (pieza.forma[i][j] === 1) {
+        let tableroX = x + i;
+        let tableroY = y + j;
+        if (
+          tableroX < 0 ||
+          tableroX >= columnas ||
+          tableroY >= filas ||
+          tablero[tableroX][tableroY] !== 0
+        ) {
+          return true;
+        }
+      }
     }
   }
-  document.getElementById(
-    "puntuacion"
-  ).innerHTML = `<h3>Puntuación: ${puntuacion}</h3>`;
+  return false;
 }
 
 
-function actualizar(dirX, dirY) {
-  const nuevaPieza = generarPieza();
-  console.log(nuevaPieza);
-  colocarPieza(nuevaPieza, (4 + dirX), (0 + dirY));
-  dibujarTablero(nuevaPieza.color);
-  eliminarLinea();
+function posicionarPieza(pieza, x, y) {
+  for (let i = 0; i < pieza.forma.length; i++) {
+    for (let j = 0; j < pieza.forma[i].length; j++) {
+      if (pieza.forma[i][j] === 1) {
+        tablero[x + i][y + j] = 1;
+      }
+    }
+  }
 }
 
-actualizar(0, 10);
+function rotarPieza(pieza) {
+      let traspuesta = pieza.forma[0].map((_, i) => pieza.forma.map(row => row[i]));
+      let rotada = traspuesta.map(row => row.reverse());
+      pieza.forma = rotada;
+      pieza.anguloRotado = pieza.anguloRotado <= 90 ? pieza.anguloRotado += 90 : pieza.anguloRotado *= 0;
+    
+  
+}
 
-/*const nuevaPieza = elegirPieza();
-  console.log(nuevaPieza.nombre);
-  dibujarPieza(nuevaPieza, 4 + dirX, 0 + dirY);
-  dibujarTablero(nuevaPieza.color);*/
+function eliminarLinea() {
+  for (let j = 0; j < filas; j++) {
+    let sumaFila = 0;
+    for (let i = 0; i < columnas; i++) {
+      sumaFila += tablero[i][j];
+    }
+    if (sumaFila >= 10) {
+      for (let i = 0; i < columnas; i++) {
+        tablero[i].splice(j, 1);
+        tablero[i].unshift(0);
+        puntuacion += 100;
+      }
+    }
+    document.getElementById('puntuacion').innerHTML = `<h3>Puntuación: ${puntuacion}</h3>`;
+  }
+}
+
+function comprobarPrimeraFila() {
+  for (let i = 0; i < columnas; i++) {
+    if (tablero[i][0] !== 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+//dibujarTablero();
+
+function actualizar(pieza, x, y) {
+  dibujarTablero();
+  dibujarPieza(pieza, x, y);
+}
+
+function jugar() {
+  let x = 4;
+  let y = -1;
+  let pieza = generarPieza();
+
+  function moverPieza(dirX, dirY) {
+    const nuevoX = x + dirX;
+    const nuevoY = y + dirY;
+    if (!chequearColisiones(pieza, nuevoX, nuevoY)) {
+      x = nuevoX;
+      y = nuevoY;
+      console.log("X: " + x +" " + "Y: " + y);
+      console.log(pieza.forma.length);
+    } else if (dirY === 1) {
+      posicionarPieza(pieza, x, y);
+      pieza = generarPieza();
+      console.log(pieza.forma.length);
+      eliminarLinea();
+      if (comprobarPrimeraFila()) {
+        alert("Perdiste, tu puntuación es " + puntuacion);
+        location.reload();
+        clearInterval(intervaloDescenso);
+      } else {
+        x = 4;
+        y = 0;
+      }
+    }
+    actualizar(pieza, x, y);
+  }
+
+  // Manejar eventos de teclado
+  document.addEventListener("keydown", (event) => {
+    switch (event.key.toLowerCase()) {
+      case "a":
+        moverPieza(-1, 0);
+        break;
+      case "d":
+        moverPieza(1, 0);
+        break;
+      case "s":
+        moverPieza(0, 1);
+        break;
+      /*case "w"://al rotar la pieza, hay que recalcular el ancho, ya que cambia el .length
+        if( ){
+          return;
+        }else{
+          rotarPieza(pieza, x, y);
+        }
+        moverPieza(0, 0);
+        break;*/
+      default:
+        return;
+    }
+  });
+  const intervaloDescenso = setInterval(() => {
+    moverPieza(0, 1);
+  }, dificultad);
+}
+
+
+
+jugar();
+
+
+
+
+
+
+
+
+
+
+

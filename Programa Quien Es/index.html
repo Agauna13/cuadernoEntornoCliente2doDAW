@@ -1,12 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <style>
+        .relative {
+            position: relative;
+            left: 30px;
+            border: 3px solid #73AD21;
+        }
+
+        .relative:hover {
+            top: 200px;
+        }
+
+        .disp {
+            display: none;
+        }
+
+        .show {
+            display: block;
+            background-color:#73AD21;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
 </head>
-    <body>
-        <script src="script.js">
-        </script>
-    </body>
+
+<body>
+
+    <h2>position: relative;</h2>
+
+    <p>An element with position: relative; is positioned relative to its normal position:</p>
+
+    <button class="relative" onclick="mostrarDiv()">
+        This div element has position: relative;
+    </button>
+
+    <div class="disp" id='disp'>
+        Hola Holita
+    </div>
+
+
+    <script>
+        function mostrarDiv() {
+            document.getElementById('disp').classList.add('show');
+        }
+    </script>
+
+</body>
+
 </html>
