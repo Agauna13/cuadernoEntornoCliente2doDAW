@@ -1,0 +1,61 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    width: 1200px;
+    height: 100vh;
+    margin: 0 auto;
+    padding: 0;
+    background-color: black;
+    text-align: center;
+}
+
+.app {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    gap: 15px;
+    padding: 0.5rem;
+    width: max-content;
+    height: max-content;
+
+}
+
+.app-border-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-self: center;
+    padding: 1rem;
+    position: relative;
+    background: linear-gradient(to right, red, purple);
+    padding: 3px;
+    width: max-content;
+    height: max-content;
+}
+
+#puntuacion {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+    color: white;
+}
+
+canvas {
+    border: 2px solid white;
+}
+
+h1 {
+    color: white;
+    padding-top: 1vh;
+    box-sizing: border-box;
+    text-align: center;
+    padding-bottom: 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.datos {
+    border: 2px solid white;
+    height: max-content;
+}

@@ -9,16 +9,25 @@
 <style>
     canvas {
         display: block;
-        margin: 0 auto;
         background: #ffffff;
         border: 2px solid black;
     }
 </style>
 <body>
-    <canvas id="tetris" width="300" height="600">
+    <h1>TETRIS</h1>
+    <div class="app-border-wrap">
+        <div class="app">
+            <canvas id="tetris" width="300" height="600">
+            </canvas>
         
-    </canvas>
-    <div id = "puntuacion"></div>
+            <div class="datos">
+                <canvas id="siguientePieza" width="150" height="150"></canvas>
+                <div id = "puntuacion"></div>
+            </div>
+        </div>
+    </div>
+    
+    
 
     <script src="app.js"></script>
 </body>
