@@ -10,7 +10,7 @@ var dificultad = 500;
 var barra = {
   nombre: "barra",
   forma: [[1], [1], [1], [1]],
-  probabilidad: 0.3,
+  probabilidad: 0.15,
   color: "blue",
   anguloRotado: 0
 }
@@ -33,7 +33,7 @@ var rayito = {
     [1, 1],
     [0, 1],
   ],
-  probabilidad: 0.3,
+  probabilidad: 0.15,
   color: "green",
   anguloRotado: 0
 }
@@ -44,7 +44,7 @@ var laQueTieneFormitaDeT = {
     [1, 1],
     [1, 0],
   ],
-  probabilidad: 0.3,
+  probabilidad: 0.2,
   color: "orange",
   anguloRotado: 0
 }
@@ -56,7 +56,7 @@ var ele = {
     [1, 0],
     [1, 1]
   ],
-  probabilidad: 0.3,
+  probabilidad: 0.2,
   color: "pink",
   anguloRotado: 0
 }
@@ -147,14 +147,35 @@ function posicionarPieza(pieza, x, y) {
   }
 }
 
-function rotarPieza(pieza) {
-      let traspuesta = pieza.forma[0].map((_, i) => pieza.forma.map(row => row[i]));
-      let rotada = traspuesta.map(row => row.reverse());
-      pieza.forma = rotada;
-      pieza.anguloRotado = pieza.anguloRotado <= 90 ? pieza.anguloRotado += 90 : pieza.anguloRotado *= 0;
-    
-  
+function rotarPieza(pieza, x, y) {
+  let traspuesta = pieza.forma[0].map((_, i) => pieza.forma.map(row => row[i]));
+  let rotada = traspuesta.map(row => row.reverse());
+
+  let ajusteX = 0;
+  for (let i = 0; i < rotada.length; i++) {
+    for (let j = 0; j < rotada[i].length; j++) {
+      if (rotada[i][j] === 1) {
+        let tableroX = x + i;
+        let tableroY = y + j;
+        if (
+          tableroX < 0 ||
+          tableroX >= columnas ||
+          tableroY >= filas ||
+          (tableroX >= 0 && tableroY >= 0 && tablero[tableroX][tableroY] !== 0)
+        ) {
+          return x;
+        }
+        if (tableroX < 0) ajusteX = Math.max(ajusteX, -tableroX);
+        if (tableroX >= columnas) ajusteX = Math.min(ajusteX, columnas - tableroX - 1);
+      }
+    }
+  }
+
+  pieza.forma = rotada;
+  return x + ajusteX;
 }
+
+
 
 function eliminarLinea() {
   for (let j = 0; j < filas; j++) {
@@ -166,8 +187,9 @@ function eliminarLinea() {
       for (let i = 0; i < columnas; i++) {
         tablero[i].splice(j, 1);
         tablero[i].unshift(0);
-        puntuacion += 100;
       }
+      puntuacion += 100;
+      dificultad -= 50;
     }
     document.getElementById('puntuacion').innerHTML = `<h3>Puntuación: ${puntuacion}</h3>`;
   }
@@ -181,8 +203,6 @@ function comprobarPrimeraFila() {
   }
   return false;
 }
-
-//dibujarTablero();
 
 function actualizar(pieza, x, y) {
   dibujarTablero();
@@ -200,12 +220,9 @@ function jugar() {
     if (!chequearColisiones(pieza, nuevoX, nuevoY)) {
       x = nuevoX;
       y = nuevoY;
-      console.log("X: " + x +" " + "Y: " + y);
-      console.log(pieza.forma.length);
     } else if (dirY === 1) {
       posicionarPieza(pieza, x, y);
       pieza = generarPieza();
-      console.log(pieza.forma.length);
       eliminarLinea();
       if (comprobarPrimeraFila()) {
         alert("Perdiste, tu puntuación es " + puntuacion);
@@ -219,7 +236,6 @@ function jugar() {
     actualizar(pieza, x, y);
   }
 
-  // Manejar eventos de teclado
   document.addEventListener("keydown", (event) => {
     switch (event.key.toLowerCase()) {
       case "a":
@@ -231,14 +247,13 @@ function jugar() {
       case "s":
         moverPieza(0, 1);
         break;
-      /*case "w"://al rotar la pieza, hay que recalcular el ancho, ya que cambia el .length
-        if( ){
-          return;
-        }else{
-          rotarPieza(pieza, x, y);
+      case "w":
+        const nuevoX = rotarPieza(pieza, x, y);
+        if (nuevoX !== x) {
+          x = nuevoX;
         }
-        moverPieza(0, 0);
-        break;*/
+        actualizar(pieza, x, y);
+        break;
       default:
         return;
     }
