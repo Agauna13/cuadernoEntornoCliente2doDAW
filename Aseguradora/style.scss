@@ -1,0 +1,22 @@
+body{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+main{
+
+    .datosDiv{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3%;
+    }
+}

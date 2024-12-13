@@ -1,51 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <header>
-      <h1>United CarCare</h1>
-    </header>
-    <main>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Document</title>
+</head>
+
+<body>
+  <header>
+    <h1>United CarCare</h1>
+  </header>
+  <main>
+
+    <!--Haremos la validación de los datos personales primero, así, si falta algún dato o es incorrecto no avanzamos a la segunda parte -->
+    <div class="datosDiv">
+      <h3>Datos Personales</h3>
       <form action="">
-        <input type="text" placeholder="Nombre" />
-        <input type="text" placeholder="Apellido" />
+        <input type="text" placeholder="Nombre" id="nombreCliente" />
+        <input type="text" placeholder="Apellido" id="apellidoCliente" />
         <select name="sexo" id="sexo">
-            <option value="hombre">Hombre</option>
-            <option value="mujer">Mujer</option>
-          </select>
-        <input type="date" placeholder="Fecha de Nacimiento"/>
+          <option value="hombre">Hombre</option>
+          <option value="mujer">Mujer</option>
+        </select>
+        <input type="date" placeholder="Fecha de Nacimiento" />
         <input type="text" placeholder="DNI - NIE" />
         <input type="text" placeholder="E-mail" />
         <input type="number" placeholder="Teléfono" />
-        <input type="date" placeholder="Fecha de emisión del Carnet de conducir"/>
-        <input type="date" placeholder="Fecha de matriculación del Vehículo"/>
-
-        <input type="number" placeholder="Código Postal"/>
         <select name="comunidad" id="comunidad">
-          <option value="albacete">albacete</option>
         </select>
-        <select name="marca" id="sexo"></select>
-        <select name="tipoSeguro" id="sexo">
-          <option value=""></option>
-          <option value=""></option>
-          <option value=""></option>
-          <option value=""></option>
+        <select name="provincia" id="provincia">
+          <option value="">Seleccione una provincia</option>
         </select>
-        <select name="tipoVehiculo" id="sexo">
-          <option value=""></option>
-          <option value=""></option>
-          <option value=""></option>
-          <option value=""></option>
+        <input type="number" placeholder="Código Postal"/>
+      </form>
+    </div>
+
+    <div class="datosDiv">
+      <h3>Datos del vehículo</h3>
+      <form action="">
+        <input type="date" placeholder="Fecha de emisión del Carnet de conducir" />
+        <input type="date" placeholder="Fecha de matriculación del Vehículo" />
+        <input type="text" placeholder="matricula" id="matricula">
+        <select name="tipoSeguro" id="tipoSeguro">
+          <option value="terceros">Terceros</option>
+          <option value="tercerosAmpliado">Terceros Ampliado</option>
+          <option value="franquiciado">Con Franquicia</option>
+          <option value="todoRiesgo">Todo Riesgo</option>
+        </select>
+
+        <select id="tipoVehículo">
+          <option value="diesel">Diesel</option>
+          <option value="Gasolina">Gasolina</option>
+          <option value="hibrido">Hibrido</option>
+          <option value="electrico">Eléctrico</option>
+        </select>
+
+        <select id="marcasModelos">
+        </select>
+
+        <select id="modeloVehiculo">
+          <option value="">Seleccione un modelo</option>
         </select>
       </form>
-    </main>
-    <footer></footer>
+    </div>
+    
+  </main>
+  <footer></footer>
 
-    <script src="script.js"></script>
-  </body>
+  <script type="module" src="script.js"></script>
+</body>
+
 </html>

@@ -1,82 +1,83 @@
-const comunidades = [
+import { comunidades, marcasModelos } from "./objetos.js";
+
+
+const selectMarca = document.getElementById("marcasModelos");//relleno
+const selectModelo = document.getElementById("modeloVehiculo");//a rellenar
+const selectComunidad = document.getElementById("comunidad"); //relleno
+const selectProvincia = document.getElementById("provincia");//a rellenar
+
+/*
+export const comunidades = [
     {
         comunidad: "Andalucía",
         provincias: ["Almería", "Cádiz", "Córdoba", "Granada", "Huelva", "Jaén", "Málaga", "Sevilla"]
     },
+    
+    
+export const marcasModelos = [
     {
-        comunidad: "Aragón",
-        provincias: ["Huesca", "Teruel", "Zaragoza"]
-    },
-    {
-        comunidad: "Asturias",
-        provincias: ["Asturias"]
-    },
-    {
-        comunidad: "Islas Baleares",
-        provincias: ["Islas Baleares"]
-    },
-    {
-        comunidad: "Canarias",
-        provincias: ["Las Palmas", "Santa Cruz de Tenerife"]
-    },
-    {
-        comunidad: "Cantabria",
-        provincias: ["Cantabria"]
-    },
-    {
-        comunidad: "Castilla y León",
-        provincias: ["Ávila", "Burgos", "León", "Palencia", "Salamanca", "Segovia", "Soria", "Valladolid", "Zamora"]
-    },
-    {
-        comunidad: "Castilla-La Mancha",
-        provincias: ["Albacete", "Ciudad Real", "Cuenca", "Guadalajara", "Toledo"]
-    },
-    {
-        comunidad: "Cataluña",
-        provincias: ["Barcelona", "Girona", "Lleida", "Tarragona"]
-    },
-    {
-        comunidad: "Extremadura",
-        provincias: ["Badajoz", "Cáceres"]
-    },
-    {
-        comunidad: "Galicia",
-        provincias: ["A Coruña", "Lugo", "Ourense", "Pontevedra"]
-    },
-    {
-        comunidad: "Madrid",
-        provincias: ["Madrid"]
-    },
-    {
-        comunidad: "Murcia",
-        provincias: ["Murcia"]
-    },
-    {
-        comunidad: "Navarra",
-        provincias: ["Navarra"]
-    },
-    {
-        comunidad: "La Rioja",
-        provincias: ["La Rioja"]
-    },
-    {
-        comunidad: "País Vasco",
-        provincias: ["Álava", "Bizkaia", "Gipuzkoa"]
-    },
-    {
-        comunidad: "Valencia",
-        provincias: ["Alicante", "Castellón", "Valencia"]
-    },
-    {
-        comunidad: "Ceuta",
-        provincias: ["Ceuta"]
-    },
-    {
-        comunidad: "Melilla",
-        provincias: ["Melilla"]
+        marca: "Toyota",
+        modelos: ["Corolla", "Camry", "RAV4", "Highlander", "Prius", "Yaris", "Tacoma", "Tundra", "C-HR"]
     }
-];
+    
+*/
+
+function fillSelect(objeto, elementoHtml, key){
+    elementoHtml.innerHTML="";
+    objeto.forEach((item)=>{
+        const option = document.createElement("option");
+        option.value = item[key];
+        option.textContent = item[key];
+        elementoHtml.appendChild(option);
+    })
+}
+
+fillSelect(comunidades, selectComunidad, "comunidad");
+fillSelect(marcasModelos, selectMarca, "marca");
 
 
 
-//mirar de cambiar la estructura de los objetos a arrays asociativos
+
+function fillDependantSelect(selectedItem, selectedObject, targetElement){
+    let clave, valor;
+    if(selectedObject === marcasModelos){
+        clave = "marca";
+        valor = "modelos";
+    }else if(selectedObject === comunidades){
+        clave = "comunidad";
+        valor = "provincias";
+    }
+    targetElement.innerHTML = '<option value="">Seleccione una opción</option>';
+    const foundItem = selectedObject.find((item) => item[clave] === selectedItem);
+
+    if(foundItem){
+        foundItem[valor].forEach((subItem)=>{
+            const option = document.createElement("option");
+            option.value = subItem;
+            option.textContent = subItem;
+            targetElement.appendChild(option);
+        });
+    }
+}
+
+function handleSelectChange(event, selectedObject, targetElement) {
+    const selectedItem = event.target.value;
+    targetElement.innerHTML = '<option value="">Seleccione una opción</option>';
+
+    console.log(selectedItem);
+    console.log(selectedObject);
+    console.log(targetElement);
+
+    fillDependantSelect(selectedItem, selectedObject, targetElement);
+}
+
+
+selectComunidad.addEventListener("change", (event) => {
+    handleSelectChange(event, comunidades, selectProvincia);
+});
+
+selectMarca.addEventListener("change", (event) => {
+    handleSelectChange(event, marcasModelos, selectModelo);
+});
+
+
