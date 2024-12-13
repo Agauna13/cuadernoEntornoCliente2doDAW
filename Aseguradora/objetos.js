@@ -1,5 +1,47 @@
 
+export const tipoSeguro = [
+    {
+        tipo: "Terceros",
+        precio: 500
+    },
+    {
+        tipo: "Terceros ampliado",
+        precio: 650
+    },
+    {
+        tipo: "Con Franquicia",
+        precio: 750
+    },
+    {
+        tipo: "Todo Riesgo",
+        precio: 1000
+    }
+// Tipo de seguro (Terceros, Terceros ampliado, Con franquicia,Todo riesgo) | Precio base tipo de seguro (500, 650, 750, 1000) 
+]
 
+
+export const tipoVehiculo = [
+    {
+        tipo: "Diesel",
+        penalizacion: 20
+    },
+
+    {
+        tipo: "Gasolina",
+        penalizacion: 15
+    },
+    {
+        tipo: "Hibrido",
+        penalizacion: 5
+    },
+    {
+        tipo: "Eléctrico",
+        penalizacion: 0
+    },
+
+
+    //Tipo vehículo (Diesel, Gasolina, Hibrido, Eléctrico) | Penalización por el tipo de vehículo (20%, 15%, 5%, 0%)
+]
 
 
 export const comunidades = [

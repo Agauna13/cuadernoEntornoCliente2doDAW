@@ -1,26 +1,14 @@
-import { comunidades, marcasModelos } from "./objetos.js";
+import { comunidades, marcasModelos, tipoSeguro, tipoVehiculo } from "./objetos.js";
 
 
 const selectMarca = document.getElementById("marcasModelos");//relleno
 const selectModelo = document.getElementById("modeloVehiculo");//a rellenar
 const selectComunidad = document.getElementById("comunidad"); //relleno
 const selectProvincia = document.getElementById("provincia");//a rellenar
+const selectVehiculo = document.getElementById("tipoVehiculo");
+const selectSeguro = document.getElementById("tipoSeguro");
 
-/*
-export const comunidades = [
-    {
-        comunidad: "Andalucía",
-        provincias: ["Almería", "Cádiz", "Córdoba", "Granada", "Huelva", "Jaén", "Málaga", "Sevilla"]
-    },
-    
-    
-export const marcasModelos = [
-    {
-        marca: "Toyota",
-        modelos: ["Corolla", "Camry", "RAV4", "Highlander", "Prius", "Yaris", "Tacoma", "Tundra", "C-HR"]
-    }
-    
-*/
+
 
 function fillSelect(objeto, elementoHtml, key){
     elementoHtml.innerHTML="";
@@ -34,6 +22,8 @@ function fillSelect(objeto, elementoHtml, key){
 
 fillSelect(comunidades, selectComunidad, "comunidad");
 fillSelect(marcasModelos, selectMarca, "marca");
+fillSelect(tipoVehiculo, selectVehiculo, "tipo");
+fillSelect(tipoSeguro, selectSeguro, "tipo");
 
 
 
