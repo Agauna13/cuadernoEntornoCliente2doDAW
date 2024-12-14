@@ -1,4 +1,3 @@
-
 export const tipoSeguro = [
     {
         tipo: "Terceros",
@@ -16,7 +15,7 @@ export const tipoSeguro = [
         tipo: "Todo Riesgo",
         precio: 1000
     }
-// Tipo de seguro (Terceros, Terceros ampliado, Con franquicia,Todo riesgo) | Precio base tipo de seguro (500, 650, 750, 1000) 
+    // Tipo de seguro (Terceros, Terceros ampliado, Con franquicia,Todo riesgo) | Precio base tipo de seguro (500, 650, 750, 1000) 
 ]
 
 
@@ -221,7 +220,157 @@ export const marcasModelos = [
 ];
 
 
-//mirar de cambiar la estructura de los objetos a arrays asociativos
 
+export const codigosPostales = [
+    { provincia: "Álava", inicio: "01000", fin: "01520"},
+    { provincia: "Albacete", inicio: "02000", fin: "02696"},
+    { provincia: "Alicante", inicio: "03000", fin: "03860" },
+    { provincia: "Almería", inicio: "04000", fin: "04897" },
+    { provincia: "Asturias", inicio: "33000", fin: "33993" },
+    { provincia: "Ávila", inicio: "05000", fin: "05697" },
+    { provincia: "Badajoz", inicio: "06000", fin: "06980" },
+    { provincia: "Islas Baleares", inicio: "07000", fin: "07860" },
+    { provincia: "Barcelona", inicio: "08000", fin: "08980" },
+    { provincia: "Burgos", inicio: "09000", fin: "09693" },
+    { provincia: "Cáceres", inicio: "10000", fin: "10991" },
+    { provincia: "Cádiz", inicio: "11000", fin: "11693" },
+    { provincia: "Cantabria", inicio: "39000", fin: "39880" },
+    { provincia: "Castellón", inicio: "120002", fin: "12609" },
+    { provincia: "Ceuta", inicio: "51000", fin: "51001" },
+    { provincia: "Ciudad Real", inicio: "13000", fin: "13779" },
+    { provincia: "Córdoba", inicio: "14000", fin: "14970" },
+    { provincia: "Cuenca", inicio: "16000", fin: "16891" },
+    { provincia: "Girona", inicio: "17000", fin: "17869" },
+    { provincia: "Granada", inicio: "18000", fin: "18890" },
+    { provincia: "Guadalajara", inicio: "19000", fin: "19495" },
+    { provincia: "Gipuzkoa", inicio: "20000", fin: "20870" },
+    { provincia: "Huelva", inicio: "21000", fin: "21891" },
+    { provincia: "Huesca", inicio: "22000", fin: "22880" },
+    { provincia: "Jaen", inicio: "23000", fin: "23790" },
+    { provincia: "A Coruña", inicio: "15000", fin: "15981" },
+    { provincia: "La Rioja", inicio: "26000", fin: "26589" },
+    { provincia: "Las Palmas", inicio: "35000", fin: "35640" },
+    { provincia: "León", inicio: "24000", fin: "24996" },
+    { provincia: "Lleida", inicio: "25000", fin: "25796" },
+    { provincia: "Lugo", inicio: "27000", fin: "27891" },
+    { provincia: "Madrid", inicio: "28000", fin: "28991" },
+    { provincia: "Málaga", inicio: "29000", fin: "29792" },
+    { provincia: "Melilla", inicio: "52000", fin: "52001" },
+    { provincia: "Murcia", inicio: "30000", fin: "30892" },
+    { provincia: "Navarra", inicio: "31000", fin: "31890" },
+    { provincia: "Ourense", inicio: "32000", fin: "32930" },
+    { provincia: "Palencia", inicio: "34000", fin: "34889" },
+    { provincia: "Pontevedra", inicio: "36000", fin: "36980" },
+    { provincia: "Salamanca", inicio: "37000", fin: "37900" },
+    { provincia: "Segovia", inicio: "40000", fin: "40593" },
+    { provincia: "Sevilla", inicio: "41000", fin: "41980" },
+    { provincia: "Soria", inicio: "42000", fin: "42368" },
+    { provincia: "Tarragona", inicio: "43000", fin: "43896" },
+    { provincia: "Tenerife", inicio: "38000", fin: "38911" },
+    { provincia: "Teruel", inicio: "44000", fin: "44793" },
+    { provincia: "Toledo", inicio: "45000", fin: "45960" },
+    { provincia: "Valencia", inicio: "46000", fin: "46980" },
+    { provincia: "Valladolid", inicio: "47000", fin: "47883" },
+    { provincia: "Bizkaia", inicio: "48000", fin: "48992" },
+    { provincia: "Zamora", inicio: "49000", fin: "49882" },
+    { provincia: "Zaragoza", inicio: "50000", fin: "50840" }
+];
 
-/* Fuente para los rangos de los códigos postales españoles: https://www.metelidrissi.com/rangos-de-codigos-postales-en-espana-por-provincias-para-woocommerce/  */
+export const restoDni = [
+    {
+        letra: "t",
+        resto: 0
+    },
+    {
+        letra: "r",
+        resto: 1
+    },
+    {
+        letra: "w",
+        resto: 2
+    },
+    {
+        letra: "a",
+        resto: 3
+    },
+    {
+        letra: "g",
+        resto: 4
+    },
+    {
+        letra: "m",
+        resto: 5
+    },
+    {
+        letra: "y",
+        resto: 6
+    },
+    {
+        letra: "f",
+        resto: 7
+    },
+    {
+        letra: "p",
+        resto: 8
+    },
+    {
+        letra: "d",
+        resto: 9
+    },
+    {
+        letra: "x",
+        resto: 10
+    },
+    {
+        letra: "b",
+        resto: 11
+    },
+    {
+        letra: "n",
+        resto: 12
+    },
+    {
+        letra: "j",
+        resto: 13
+    },
+    {
+        letra: "z",
+        resto: 14
+    },
+    {
+        letra: "s",
+        resto: 15
+    },
+    {
+        letra: "q",
+        resto: 16
+    },
+    {
+        letra: "v",
+        resto: 17
+    },
+    {
+        letra: "h",
+        resto: 18
+    },
+    {
+        letra: "l",
+        resto: 19
+    },
+
+    {
+        letra: "c",
+        resto: 20
+    },
+    {
+        letra: "k",
+        resto: 21
+    },
+    {
+        letra: "e",
+        resto: 22
+    }
+    
+]
+
+/* Fuente para los inicios de los códigos postales españoles: https://www.metelidrissi.com/inicios-de-codigos-postales-en-espana-por-provincias-para-woocommerce/  */
