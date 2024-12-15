@@ -2,13 +2,15 @@ import {
   comunidades,
   marcasModelos,
   tipoSeguro,
-  tipoVehiculo,
-  restoDni,
-  codigosPostales,
+  tipoVehiculo
 } from "./objetos.js";
 
+import * as funciones from "./comprobaciones.js";
+
+import * as calculos from "./calculos.js";
 //Manejando eventos del submit
 const formulario = document.getElementById("formulario");
+
 
 formulario.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -63,10 +65,6 @@ function handleSelectChange(event, selectedObject, targetElement) {
   const selectedItem = event.target.value;
   targetElement.innerHTML = '<option value="">Seleccione una opción</option>';
 
-  console.log(selectedItem);
-  console.log(selectedObject);
-  console.log(targetElement);
-
   fillDependantSelect(selectedItem, selectedObject, targetElement);
 }
 
@@ -78,168 +76,258 @@ selectMarca.addEventListener("change", (event) => {
   handleSelectChange(event, marcasModelos, selectModelo);
 });
 
-//Comprobaciones
-
-var errorLog = [];
-
-function comprobarNombreApellidos(nombreCliente, apellidoCliente) {
-  const nombre = nombreCliente.match(/[a-zA-ZáéíóúÁÉÍÓÚ -]{2,}/g);
-  const apellido = apellidoCliente.match(/[a-zA-ZáéíóúÁÉÍÓÚ -]{2,}/g);
-
-  if (!nombre || !apellido) {
-    errorLog.push("nombre o apellido incorrectos");
-    return false;
+function imprimirErrores() {
+  //scrollA(top);
+  for (const errores of funciones.errorLog) {
+    const target = document.getElementById(errores.nombre);
+    target.innerHTML = errores.error;
+    target.classList.remove("oculto");
+    target.classList.add("flex", "error");
   }
-  return true;
 }
 
-function comprobarMayoriaEdad(fechaNacimiento){
-    let hoy = new Date();
-    let nacimiento = new Date(fechaEmisionCarnet);
-
-    return (hoy.getFullYear() - 18 >= nacimiento.getFullYear());
-}
-
-function comprobarDni(dni) {
-    let numero = dni.slice(0, 8);
-    numero = parseInt(numero);
-    let letraDni = dni.slice(8, 9);
-
-    const letraObjetivo = restoDni.find((item) => item.letra === letraDni.toLowerCase());
+//Manipulación de las tarjetas
+var contenedor = document.getElementById("container");
 
 
-    console.log(dni);
-    console.log(numero);
-    console.log(letraDni);
-
-    return(letraObjetivo && numero % 23 == letraObjetivo.resto);
+function switchClass(elemento, clase, addRemove) {
+  if (addRemove) {
+    elemento.classList.add(clase);
+  } else {
+    elemento.classList.remove(clase);
+  }
 
 }
 
-function comprobarFechaCarnet(fechaEmisionCarnet){
-    let hoy = new Date();
-    let fechaEmision = new Date(fechaEmisionCarnet);
-    return fechaEmision <= hoy;
-}
-
-function comprobarFechaMatriculacion(fechaMatriculacion){
-    let hoy = new Date();
-    let fechaMatricula = new Date(fechaMatriculacion);
-    return fechaMatricula <= hoy;
-}
-
-function comprobarMatricula(matricula){
-    const letrasProhibidas = ["A", "CH", "E", "I", "L", "Ñ", "O", "Q", "U"];
-    const numeroStr = matricula.slice(0,4);
-    let numero = parseInt(numeroStr);
-    const letras = matricula.slice(4, 7).toUpperCase();
-    const letra = letras.split('');
-
-    switch(true){
-        case (matricula.length !== 7):
-            errorLog.push("Formato de matrícula incorrecto, (Requerido 4 números y 3 letras)");
-            console.log("Formato de matrícula incorrecto, (Requerido 4 números y 3 letras)");
-            return false;
-        case (numero > 9999 || numero < 0):
-            errorLog.push("Revise el numero de matricula. Requerido: 4 dígitos y 3 letras");
-            console.log("Revise el numero de matricula. Requerido: 4 dígitos y 3 letras");
-            return false;
-        case (letras.length < 3 || letra.some(letra => letrasProhibidas.includes(letra))):
-            console.log("Hay alguna letra incorrecta");
-            return false;
-        default:
-            return true;
-        
+//Si el cliente cambiar el tipo de seguro en el formulario, volvemos a mostrarle todas las opciones.
+function mostrar(elemento, elementoAlterado, alteracion) {
+  let arrElementos = elemento.children;
+  for (const card of arrElementos) {
+    if (alteracion !== "elegido") {
+      switchClass(card, "oculto", false);
+      switchClass(card, "visible", true);
     }
+
+    if (card === elementoAlterado) {
+      switchClass(card, alteracion, true);
+    } else {
+      switchClass(card, alteracion, false);
+    }
+  }
 }
 
-function comprobarCodigoPostal(codigoPostal, provinciaCliente) {
-    let provincias = codigosPostales.find((item) => item.provincia === provinciaCliente);
 
-    if(provincias){
-        let inicioRango = provincias.inicio;
-        let finRango = provincias.fin;
 
-        inicioRango = parseInt(inicioRango);
-        finRango= parseInt(finRango);
-        console.log("inicio: " + inicioRango + " Fin: " + finRango);
-        if(codigoPostal >= inicioRango && codigoPostal <= finRango){
-            return true;
-        }else{
-            return false;
-        }
+contenedor.addEventListener("click", (event) => {
+  if (event.target.id === "contratar") {
+    const padre = event.target.parentElement;
+    mostrar(contenedor, padre, "elegido");
+  }
 
-    }else{
-        errorLog.push("Código postal incorrecto");
+  if (event.target.id === "descartar") {
+    const padre = event.target.parentElement;
+    switchClass(padre, "visible", false);
+    switchClass(padre, "oculto", true);
+  }
+});
 
-        return false;
-    }
-    
+//eventos del drag and drop
+
+// Elementos directamente referenciados por su ID
+const dropArea = document.getElementById("file-input").parentElement;
+const fileInput = document.getElementById("file-input");
+const previewContainer = document.getElementById("previewContainer");
+
+dropArea.addEventListener("dragover", (event) => {
+  event.preventDefault();
+  dropArea.classList.add("highlight");
+});
+
+dropArea.addEventListener("drop", (event) => {
+  event.preventDefault();
+  const files = event.dataTransfer.files;
+  if (files.length) {
+    const file = files[0];
+    handleFile(file);
+  }
+});
+fileInput.addEventListener("change", () => {
+  const files = fileInput.files;
+
+  if (files.length) {
+    const file = files[0];
+    handleFile(file);
+  }
+});
+function handleFile(file) {
+  if (!funciones.comprobarFotoVehiculo(file)) {
+    previewContainer.innerHTML = "<p>El archivo debe ser una imagen válida.</p>";
+    return;
+  }
+  const img = document.createElement("img");
+  img.src = URL.createObjectURL(file);
+  img.alt = "Vista previa de la imagen cargada";
+  img.style.maxWidth = "100%";
+  img.style.maxHeight = "200px";
+
+  // Limpiar contenedor previo y añadir imagen
+  previewContainer.innerHTML = ""; // Limpia cualquier contenido previo
+  previewContainer.appendChild(img);
 }
 
-document.addEventListener("submit", (event) => {
+/*function scrollA(elemento, posicion){
+  if(elemento){
+    elemento.scrollIntoView(
+      {
+        behavior: "smooth"
+      }
+    )
+  }else{
+    window.scrollTo(
+      {
+        top: posicion,
+        behavior: "smooth"
+      }
+    );
+  }
 
-    const cliente = {
-        nombre: document.getElementById("nombreCliente").value,
-        apellido: document.getElementById("apellidoCliente").value,
-        sexo: document.getElementById("sexo").value,
-        nacimiento: document.getElementById("fechaNacimiento").value,
-        dni: document.getElementById("numeroDocumento").value,
-        email: document.getElementById("email").value,
-        telefono: document.getElementById("telefono").value,
-        codigoPostal: document.getElementById("codigoPostal").value,
-        fechaEmisionCarnet: document.getElementById("fechaEmisionCarnet").value,
-        fechaMatriculacion: document.getElementById("fechaMatriculacion").value,
-        matricula: document.getElementById("matricula").value,
-        fotoVehiculo: document.getElementById("file-input").value,
-        comunidad: selectComunidad.value,
-        provincia: selectProvincia.value,
-        marca: selectMarca.value,
-        modelo: selectModelo.value,
-
-    }
-  /*      
-  const nombreCliente = document.getElementById("nombreCliente").value;
-
-  const apellidoCliente = document.getElementById("apellidoCliente").value;
-
-  //const sexo = document.getElementById("sexo").value;
-
-  const nacimiento = document.getElementById("fechaNacimiento").value;
-
-  var dni = document.getElementById("numeroDocumento").value;
-
-  const email = document.getElementById("email").value;
-
-  const telefono = document.getElementById("telefono").value;
-
-  const codigoPostal = document.getElementById("codigoPostal").value;
-
-  const fechaEmisionCarnet =
-    document.getElementById("fechaEmisionCarnet").value;
-
-  const fechaMatriculacion =
-    document.getElementById("fechaMatriculacion").value;
-
-  const matricula = document.getElementById("matricula").value;
-
-  const fotoVehiculo = document.getElementById("file-input").value;*/
-
-  comprobarNombreApellidos(cliente.nombre, cliente.apellido);
-
-  console.log("comprobar nacimiento: " + (comprobarMayoriaEdad(cliente.nacimiento)));
   
-  console.log(comprobarFechaCarnet(cliente.fechaEmisionCarnet));
-
-  console.log(comprobarFechaMatriculacion(cliente.fechaMatriculacion));
-
-  console.log(comprobarMatricula(cliente.matricula));
-
-  console.log(comprobarCodigoPostal(cliente.codigoPostal, cliente.provincia));
+}*/
 
 
+
+var datosFinales = [];
+
+
+
+
+function rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, seguro) {
+  let tarjetas = contenedor.children;
+
+  for (const tarjeta of tarjetas) {
+    let precioElemento = tarjeta.querySelector("#precioSeguro");
+    if (tarjeta.id === seguro) {
+      precioElemento.textContent = datosFinales[0].precio;
+    } else {
+      switch (true) {
+        case (tarjeta.id === "terceros"):
+          precioElemento.textContent = terceros;
+          break;
+        case (tarjeta.id === "tercerosAmp"):
+          precioElemento.textContent = tercerosAmp;
+          break;
+        case (tarjeta.id === "franquiciado"):
+          precioElemento.textContent = franquiciado;
+          break;
+        case (tarjeta.id === "todoRiesgo"):
+          precioElemento.textContent = todoRiesgo;
+          break;
+      }
+    }
+  }
+
+}
+formulario.addEventListener("submit", (event) => {
+  const cliente = {
+    nombre: document.getElementById("nombreCliente").value,
+    apellido: document.getElementById("apellidoCliente").value,
+    sexo: document.getElementById("sexo").value,
+    nacimiento: document.getElementById("fechaNacimiento").value,
+    dni: document.getElementById("numeroDocumento").value,
+    email: document.getElementById("email").value,
+    telefono: document.getElementById("telefono").value,
+    codigoPostal: document.getElementById("codigoPostal").value,
+    fechaEmisionCarnet: document.getElementById("fechaEmisionCarnet").value,
+    fechaMatriculacion: document.getElementById("fechaMatriculacion").value,
+    matricula: document.getElementById("matricula").value,
+    motor: document.getElementById("tipoVehiculo").value,
+    cobertura: document.getElementById("tipoSeguro").value,
+    fotoVehiculo: document.getElementById("file-input").files[0],
+    comunidad: selectComunidad.value,
+    provincia: selectProvincia.value,
+    marca: selectMarca.value,
+    modelo: selectModelo.value,
+  };
+
+  let listaComprobaciones = [
+    funciones.comprobarNombreApellidos(cliente.nombre, cliente.apellido),
+    funciones.comprobarAntiguedad(cliente.nacimiento, 18, "nacimiento"),
+    funciones.comprobarDni(cliente.dni),
+    funciones.comprobarEmail(cliente.email),
+    funciones.comprobarTelefono(cliente.telefono),
+    funciones.comprobarAntiguedad(cliente.fechaEmisionCarnet, 0, "emisionCarnet"),
+    funciones.comprobarAntiguedad(cliente.fechaMatriculacion, 0, "fechaMatriculacion"),
+    funciones.comprobarMatricula(cliente.matricula),
+    funciones.comprobarCodigoPostal(cliente.codigoPostal, cliente.provincia),
+  ];
+
+  for (const bool of listaComprobaciones) {
+    console.log(bool);
+  }
+
+  /*let todoOk = listaComprobaciones.every((comprobacion) => comprobacion);
+  console.log(todoOk);
+
+  if (!todoOk) {
+    imprimirErrores();
+    return;
+  }*/
+  console.log(cliente.cobertura);
+  // Procesamiento exitoso
+  datosFinales.splice(0, datosFinales.length);
+  datosFinales.push({
+    precio: calculos.calcularSeguro(
+      cliente.nacimiento,
+      cliente.fechaEmisionCarnet,
+      cliente.fechaMatriculacion,
+      cliente.motor,
+      cliente.cobertura
+    ),
+    seguroElegido: cliente.cobertura,
+  });
+
+  let terceros = calculos.calcularSeguro(cliente.nacimiento,
+    cliente.fechaEmisionCarnet,
+    cliente.fechaMatriculacion,
+    cliente.motor,
+    "terceros");
+
+  let tercerosAmp = calculos.calcularSeguro(cliente.nacimiento,
+    cliente.fechaEmisionCarnet,
+    cliente.fechaMatriculacion,
+    cliente.motor,
+    "tercerosAmp");
+
+
+  let franquiciado = calculos.calcularSeguro(cliente.nacimiento,
+    cliente.fechaEmisionCarnet,
+    cliente.fechaMatriculacion,
+    cliente.motor,
+    "franquiciado");
+
+  let todoRiesgo = calculos.calcularSeguro(cliente.nacimiento,
+    cliente.fechaEmisionCarnet,
+    cliente.fechaMatriculacion,
+    cliente.motor,
+    "todoRiesgo");
+
+  console.log(terceros)
+  console.log(tercerosAmp)
+  console.log(franquiciado)
+  console.log(todoRiesgo)
+
+  // Mostrar el contenedor
+  console.log(contenedor);
+  mostrar(contenedor);
+  switchClass(contenedor, "oculto", false); // Remueve la clase 'oculto'
+  switchClass(contenedor, "visible", true); // Añade la clase 'visible'
+
+  rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, cliente.cobertura);
+  const divAlterado = document.getElementById(cliente.cobertura);
+  mostrar(contenedor, divAlterado, "elegido");
 });
 
 
 
-//Pendiente comprobar mayoria de edad
+
+

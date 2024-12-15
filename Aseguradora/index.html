@@ -1,81 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
-  </head>
 
-  <body>
-    <header>
-      <h1>United CarCare</h1>
-    </header>
-    <main>
-      <div class="datosDiv">
-        <form action="" id="formulario">
-          <h3>Datos Personales</h3>
-          <input type="text" placeholder="Nombre" id="nombreCliente" />
-          <input type="text" placeholder="Apellido" id="apellidoCliente" />
-          <select name="sexo" id="sexo">
-            <option value="hombre">Hombre</option>
-            <option value="mujer">Mujer</option>
-            <option value="otros">Otros</option>
-          </select>
-          <label for="">Fecha De Nacimiento</label>
-          <input
-            type="date"
-            placeholder="Fecha de Nacimiento"
-            id="fechaNacimiento"
-          />
-          <input type="text" placeholder="DNI - NIE" id="numeroDocumento" />
-          <input type="text" placeholder="E-mail" id="email" />
-          <input type="number" placeholder="Teléfono" id="telefono" />
-          <select name="comunidad" id="comunidad"></select>
-          <select name="provincia" id="provincia">
-            <option value="">Seleccione una provincia</option>
-          </select>
-          <input type="number" placeholder="Código Postal" id="codigoPostal" />
-          <h3>Datos del vehículo</h3>
-          <label for="">Fecha de emisión de la licencia</label>
-          <input
-            type="date"
-            placeholder="Fecha de emisión del Carnet de conducir"
-            id="fechaEmisionCarnet"
-          />
-          <label for="">Fecha de matriculación del vehículo</label>
-          <input
-            type="date"
-            placeholder="Fecha de matriculación del Vehículo"
-            id="fechaMatriculacion"
-          />
-          <input type="text" placeholder="matricula" id="matricula" />
-          <select name="tipoSeguro" id="tipoSeguro"></select>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Document</title>
+</head>
 
-          <select id="tipoVehiculo"></select>
+<body>
+  <header>
+    <h1>United CarCare</h1>
+  </header>
+  <main>
+    <div class="datosDiv">
+      <form action="" id="formulario">
+        <h3>Datos Personales</h3>
+        <input type="text" placeholder="Nombre" id="nombreCliente" />
+        <p class="oculto" id="errorNombre"></p>
+        <input type="text" placeholder="Apellido" id="apellidoCliente" />
+        <p class="oculto" id="errorApellido"></p>
+        <select name="sexo" id="sexo">
+          <option value="hombre">Hombre</option>
+          <option value="mujer">Mujer</option>
+          <option value="otros">Otros</option>
+        </select>
+        <label>Fecha De Nacimiento</label>
+        <input type="date" placeholder="Fecha de Nacimiento" id="fechaNacimiento" />
+        <p class="oculto" id="errorNacimiento"></p>
+        <input type="text" placeholder="DNI - NIE" id="numeroDocumento" />
+        <p class="oculto" id="errorDni"></p>
+        <input type="text" placeholder="E-mail" id="email" />
+        <p class="oculto" id="errorEmail"></p>
+        <input type="number" placeholder="Teléfono" id="telefono" />
+        <p class="oculto" id="errorTelefono"></p>
+        <select name="comunidad" id="comunidad"></select>
+        <p class="oculto" id="errorComunidad"></p>
+        <select name="provincia" id="provincia">
+          <option value="">Seleccione una provincia</option>
+        </select>
+        <input type="number" placeholder="Código Postal" id="codigoPostal" />
+        <p class="oculto" id="errorCodigoPostal"></p>
+        <h3>Datos del vehículo</h3>
+        <label>Fecha de emisión de la licencia</label>
+        <input type="date" placeholder="Fecha de emisión del Carnet de conducir" id="fechaEmisionCarnet" />
+        <p class="oculto" id="errorFechaCarnet"></p>
+        <label>Fecha de matriculación del vehículo</label>
+        <input type="date" placeholder="Fecha de matriculación del Vehículo" id="fechaMatriculacion" />
+        <p class="oculto" id="errorFechaMatriculacion"></p>
+        <input type="text" placeholder="matricula" id="matricula" />
+        <p class="oculto" id="errorMatricula"></p>
+        <select name="tipoSeguro" id="tipoSeguro"></select>
 
-          <select id="marcasModelos"></select>
+        <select id="tipoVehiculo"></select>
 
-          <select id="modeloVehiculo">
-            <option value="">Seleccione un modelo</option>
-          </select>
+        <select id="marcasModelos"></select>
 
+        <select id="modeloVehiculo">
+          <option value="">Seleccione un modelo</option>
+        </select>
+        <div class="uploader">
           <h3>Sube una foto de tu vehículo</h3>
           <div class="drop-area">
-            <img
-              src="./media/uploadCloud.png"
-              alt="Arrastra tu imagen para Subirla"
-            />
+            <img src="./media/uploadCloud.png" alt="Arrastra tu imagen para Subirla" />
             <p>Arrastra tu imagen aquí para subirla</p>
             <input type="file" id="file-input" multiple hidden />
           </div>
-
-          <button type="submit" id="botonSubmit">Calcula tu seguro</button>
-        </form>
+          <p class="oculto" id="errorImagen"></p>
+        </div>
+        <div id="previewContainer"></div>
+        <button type="submit" id="botonSubmit">Calcula tu seguro</button>
+      </form>
+    </div>
+    <H2>Elige el seguro que más se adapte a ti</H2>
+    <div class="container" id="container">
+      <div class="card" id="terceros">
+        <h3>Terceros</h3>
+        <p id="precioSeguro"></p>
+        <button id="contratar">Contratar</button>
+        <button id="descartar">Descartar</button>
       </div>
-    </main>
-    <footer></footer>
+      <div class="card" id="tercerosAmp">
+        <h3>Terceros ampliado</h3>
+        <p id="precioSeguro"></p>
+        <button id="contratar">Contratar</button>
+        <button id="descartar">Descartar</button>
+      </div>
+      <div class="card" id="franquiciado">
+        <h3>Con Franquicia</h3>
+        <p id="precioSeguro"></p>
+        <button id="contratar">contratar</button>
+        <button id="descartar">Descartar</button>
+      </div>
+      <div class="card" id="todoRiesgo">
+        <h3>A todo Riesgo</h3>
+        <p id="precioSeguro"></p>
+        <button id="contratar">contratar</button>
+        <button id="descartar">Descartar</button>
+      </div>
+    </div>
+  </main>
+  <footer></footer>
 
-    <script type="module" src="script.js"></script>
-  </body>
+  <script type="module" src="script.js"></script>
+</body>
+
 </html>

@@ -1,18 +1,18 @@
 export const tipoSeguro = [
     {
-        tipo: "Terceros",
+        tipo: "terceros",
         precio: 500
     },
     {
-        tipo: "Terceros ampliado",
+        tipo: "tercerosAmp",
         precio: 650
     },
     {
-        tipo: "Con Franquicia",
+        tipo: "franquiciado",
         precio: 750
     },
     {
-        tipo: "Todo Riesgo",
+        tipo: "todoRiesgo",
         precio: 1000
     }
     // Tipo de seguro (Terceros, Terceros ampliado, Con franquicia,Todo riesgo) | Precio base tipo de seguro (500, 650, 750, 1000) 

@@ -1,6 +1,10 @@
 body{
     width: 1200px;
+    height: auto;
     margin: 0 auto;
+
+    font-family: Arial, Helvetica, sans-serif;
+    scroll-behavior: smooth;
 }
 
 main{
@@ -11,39 +15,119 @@ main{
         align-items: center;
         justify-content: center;
 
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 2vh;
+                input, select, option{
+                    border: none;
+                    &:hover{
+                        background-color: black;
+                        color: white;
+                    }
+                }
+                button{
+                    border: 2px solid black;
+                    background: none;
+                    color: black;
+                    padding: 1.5rem;
+                    width: 30%;
+                    align-self: center;
+                }
+            }
+        }
         
-    }
-    .drop-area{
-        height: 30vh;
-        width: 45vw;
-        border: 2px dashed rgb(124, 124, 124);
-        background-color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        border-radius: 5%;
-
-        img{
-            width: 10vw;
-            height: 15vh;
+        .uploader{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            .drop-area{
+                height: 30vh;
+                width: 45vw;
+                border: 2px dashed rgb(124, 124, 124);
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                justify-self: center;
+                border-radius: 5%;
+        
+                img{
+                    width: 10vw;
+                    height: 15vh;
+                }
+                p{
+                    color:  rgb(124, 124, 124);
+                }
+            }
         }
-        p{
-            color:  rgb(124, 124, 124);
+    }
+
+
+    .container{
+        display: none;
+        grid-template-rows: repeat(2, 30vh);
+        grid-template-columns: repeat(2, 48%);
+        gap: 4%;
+        .card{
+            display: none;
+            grid-template-columns: 90%;
+            grid-template-rows: repeat(5, 15%);
+            text-align: left;
+            margin: 0 0;
+            border: 2px solid blue;
+            gap: 3%;
+    
+            button{
+                background: rgba($color: #000000, $alpha: 0.5);
+                border: none;
+                border-radius: 7%;
+                height: fit-content;
+                width: 100%;
+    
+                &:hover{
+                    background-color: black;
+                    color: white;
+                }
+            }
+    
+            &:hover{
+                background-color: lightblue;
+            }
+    
         }
-    }
-
-    form{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1vh;
-    }
-
     
 }
+
+
+.oculto{
+    display: none;
+}
+
+.flex{
+    display: flex;
+}
+
+.visible{
+    display: grid !important;
+}
+.elegido{
+    background-color: brown;
+    color: white;
+}
+
+.error{
+    color: rgba($color: red, $alpha: 0.6);
+    font-size: 0.6rem;
+}
+
+
+
+
 footer{
     height: 7vh;
     width: 100%;
 }
+
