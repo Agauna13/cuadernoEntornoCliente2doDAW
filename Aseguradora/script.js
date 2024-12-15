@@ -272,8 +272,6 @@ formulario.addEventListener("submit", (event) => {
     imprimirErrores();
     return;
   }*/
-  console.log(cliente.cobertura);
-  // Procesamiento exitoso
   datosFinales.splice(0, datosFinales.length);
   datosFinales.push({
     precio: calculos.calcularSeguro(
@@ -319,8 +317,8 @@ formulario.addEventListener("submit", (event) => {
   // Mostrar el contenedor
   console.log(contenedor);
   mostrar(contenedor);
-  switchClass(contenedor, "oculto", false); // Remueve la clase 'oculto'
-  switchClass(contenedor, "visible", true); // Añade la clase 'visible'
+  switchClass(contenedor, "oculto", false);
+  switchClass(contenedor, "visible", true);
 
   rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, cliente.cobertura);
   const divAlterado = document.getElementById(cliente.cobertura);
