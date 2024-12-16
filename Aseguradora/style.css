@@ -1,11 +1,31 @@
 body {
-  width: 1200px;
-  height: auto;
+  width: 1300px;
+  height: -moz-fit-content;
+  height: fit-content;
   margin: 0 auto;
+  background-image: url("./media/lada.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
   font-family: Arial, Helvetica, sans-serif;
   scroll-behavior: smooth;
 }
 
+header {
+  background-color: transparent;
+  -webkit-backdrop-filter: blur(3px);
+          backdrop-filter: blur(3px);
+  position: static;
+  color: white;
+}
+
+main {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: -moz-fit-content;
+  height: fit-content;
+  color: white;
+}
 main .datosDiv {
   display: flex;
   flex-direction: column;
@@ -15,22 +35,31 @@ main .datosDiv {
 main .datosDiv form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2vh;
 }
 main .datosDiv form input, main .datosDiv form select, main .datosDiv form option {
   border: none;
+  width: 25vw;
+  background-color: transparent;
+  color: white;
+  font-weight: bolder;
 }
 main .datosDiv form input:hover, main .datosDiv form select:hover, main .datosDiv form option:hover {
   background-color: black;
   color: white;
 }
 main .datosDiv form button {
-  border: 2px solid black;
+  border: 3px solid white;
   background: none;
-  color: black;
+  color: white;
+  font-weight: bold;
   padding: 1.5rem;
   width: 30%;
   align-self: center;
+}
+main .datosDiv form button:hover {
+  transform: scale(1.1);
 }
 main .uploader {
   display: flex;
@@ -41,7 +70,6 @@ main .uploader {
 main .uploader .drop-area {
   height: 30vh;
   width: 45vw;
-  border: 2px dashed rgb(124, 124, 124);
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -55,7 +83,10 @@ main .uploader .drop-area img {
   height: 15vh;
 }
 main .uploader .drop-area p {
-  color: rgb(124, 124, 124);
+  color: black;
+}
+main .uploader .drop-area:hover {
+  transform: scale(1.1);
 }
 
 .container {
@@ -66,27 +97,33 @@ main .uploader .drop-area p {
 }
 .container .card {
   display: none;
-  grid-template-columns: 90%;
-  grid-template-rows: repeat(5, 15%);
-  text-align: left;
+  grid-template-rows: 1fr auto;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
   margin: 0 0;
-  border: 2px solid blue;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   gap: 3%;
+  background-color: rgba(0, 66, 54, 0.8);
+  color: white;
+  border-radius: 10%;
 }
 .container .card button {
-  background: rgba(0, 0, 0, 0.5);
+  background: transparent;
+  color: white;
   border: none;
-  border-radius: 7%;
-  height: -moz-fit-content;
-  height: fit-content;
-  width: 100%;
+  border-radius: 10%;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
 }
 .container .card button:hover {
-  background-color: black;
+  border: 2px solid white;
   color: white;
+  transform: scale(1.1);
 }
 .container .card:hover {
-  background-color: lightblue;
+  background-color: rgba(18, 0, 66, 0.3);
 }
 
 .oculto {
@@ -102,12 +139,11 @@ main .uploader .drop-area p {
 }
 
 .elegido {
-  background-color: brown;
-  color: white;
+  background-color: rgba(25, 14, 79, 0.8) !important;
 }
 
 .error {
-  color: rgba(255, 0, 0, 0.6);
+  color: red;
   font-size: 0.6rem;
 }
 

@@ -8,6 +8,30 @@ import {
 import * as funciones from "./comprobaciones.js";
 
 import * as calculos from "./calculos.js";
+
+
+//Array para Persistencia de datos
+var datosFinales = [];
+
+//Elementos del Dom
+
+//Select
+const selectMarca = document.getElementById("marcasModelos");
+const selectModelo = document.getElementById("modeloVehiculo");
+const selectComunidad = document.getElementById("comunidad");
+const selectProvincia = document.getElementById("provincia");
+const selectVehiculo = document.getElementById("tipoVehiculo");
+const selectSeguro = document.getElementById("tipoSeguro");
+
+//Contenedores
+var contenedor = document.getElementById("container");
+
+const dropArea = document.getElementById("file-input").parentElement;
+const fileInput = document.getElementById("file-input");
+const previewContainer = document.getElementById("previewContainer");
+
+
+
 //Manejando eventos del submit
 const formulario = document.getElementById("formulario");
 
@@ -17,12 +41,7 @@ formulario.addEventListener("submit", (event) => {
 });
 
 //Rellenando los Select
-const selectMarca = document.getElementById("marcasModelos");
-const selectModelo = document.getElementById("modeloVehiculo");
-const selectComunidad = document.getElementById("comunidad");
-const selectProvincia = document.getElementById("provincia");
-const selectVehiculo = document.getElementById("tipoVehiculo");
-const selectSeguro = document.getElementById("tipoSeguro");
+
 
 function fillSelect(objeto, elementoHtml, key) {
   elementoHtml.innerHTML = "";
@@ -76,18 +95,10 @@ selectMarca.addEventListener("change", (event) => {
   handleSelectChange(event, marcasModelos, selectModelo);
 });
 
-function imprimirErrores() {
-  //scrollA(top);
-  for (const errores of funciones.errorLog) {
-    const target = document.getElementById(errores.nombre);
-    target.innerHTML = errores.error;
-    target.classList.remove("oculto");
-    target.classList.add("flex", "error");
-  }
-}
+
 
 //Manipulación de las tarjetas
-var contenedor = document.getElementById("container");
+
 
 
 function switchClass(elemento, clase, addRemove) {
@@ -134,13 +145,11 @@ contenedor.addEventListener("click", (event) => {
 //eventos del drag and drop
 
 // Elementos directamente referenciados por su ID
-const dropArea = document.getElementById("file-input").parentElement;
-const fileInput = document.getElementById("file-input");
-const previewContainer = document.getElementById("previewContainer");
+
 
 dropArea.addEventListener("dragover", (event) => {
   event.preventDefault();
-  dropArea.classList.add("highlight");
+  //dropArea.classList.add("highlight");
 });
 
 dropArea.addEventListener("drop", (event) => {
@@ -160,8 +169,14 @@ fileInput.addEventListener("change", () => {
   }
 });
 function handleFile(file) {
+  console.log(funciones.comprobarFotoVehiculo(file));
+  //funciones.comprobarFotoVehiculo(file);
   if (!funciones.comprobarFotoVehiculo(file)) {
-    previewContainer.innerHTML = "<p>El archivo debe ser una imagen válida.</p>";
+    previewContainer.innerHTML = "<p Style = 'color: red'>El archivo debe ser una imagen válida.</p>";
+      errorLog.push({
+        error: "Formato de imagen no soportado. Solo se permiten imágenes .jpg o .jpeg",
+        nombre: "errorImagen"
+      });
     return;
   }
   const img = document.createElement("img");
@@ -175,29 +190,38 @@ function handleFile(file) {
   previewContainer.appendChild(img);
 }
 
-/*function scrollA(elemento, posicion){
-  if(elemento){
-    elemento.scrollIntoView(
+function scrollA(elemento) {
+  const target = elemento || document.documentElement;
+
+  if (target) {
+    target.scrollIntoView(
       {
-        behavior: "smooth"
-      }
-    )
-  }else{
-    window.scrollTo(
-      {
-        top: posicion,
         behavior: "smooth"
       }
     );
   }
 
-  
-}*/
+}
 
 
+function imprimirErrores() {
+  for (const errores of funciones.errorLog) {
+    let target = document.getElementById(errores.nombre);
+    target.innerHTML = errores.error;
+    target.classList.remove("oculto");
+    target.classList.add("flex", "error");
+  }
 
-var datosFinales = [];
+}
 
+function limpiaErrores() {
+  for (const errores of funciones.errorLog) {
+    const target = document.getElementById(errores.nombre);
+    target.classList.add("oculto");
+    target.classList.remove("flex", "error");
+  }
+  funciones.errorLog.length = 0;
+}
 
 
 
@@ -211,16 +235,16 @@ function rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, segur
     } else {
       switch (true) {
         case (tarjeta.id === "terceros"):
-          precioElemento.textContent = terceros;
+          precioElemento.textContent = terceros + "€";
           break;
         case (tarjeta.id === "tercerosAmp"):
-          precioElemento.textContent = tercerosAmp;
+          precioElemento.textContent = tercerosAmp + "€";
           break;
         case (tarjeta.id === "franquiciado"):
-          precioElemento.textContent = franquiciado;
+          precioElemento.textContent = franquiciado + "€";
           break;
         case (tarjeta.id === "todoRiesgo"):
-          precioElemento.textContent = todoRiesgo;
+          precioElemento.textContent = todoRiesgo + "€";
           break;
       }
     }
@@ -228,6 +252,12 @@ function rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, segur
 
 }
 formulario.addEventListener("submit", (event) => {
+  limpiaErrores();
+  funciones.errorLog.length = 0;
+  datosFinales.length = 0;
+  console.log(funciones.errorLog);
+  var fotoSubida = previewContainer.hasChildNodes();
+  console.log(fotoSubida);
   const cliente = {
     nombre: document.getElementById("nombreCliente").value,
     apellido: document.getElementById("apellidoCliente").value,
@@ -242,7 +272,7 @@ formulario.addEventListener("submit", (event) => {
     matricula: document.getElementById("matricula").value,
     motor: document.getElementById("tipoVehiculo").value,
     cobertura: document.getElementById("tipoSeguro").value,
-    fotoVehiculo: document.getElementById("file-input").files[0],
+    fotoVehiculo: document.getElementById("file-input").value,
     comunidad: selectComunidad.value,
     provincia: selectProvincia.value,
     marca: selectMarca.value,
@@ -259,19 +289,15 @@ formulario.addEventListener("submit", (event) => {
     funciones.comprobarAntiguedad(cliente.fechaMatriculacion, 0, "fechaMatriculacion"),
     funciones.comprobarMatricula(cliente.matricula),
     funciones.comprobarCodigoPostal(cliente.codigoPostal, cliente.provincia),
+    funciones.comprobarFoto(cliente.fotoVehiculo, fotoSubida)
   ];
-
-  for (const bool of listaComprobaciones) {
-    console.log(bool);
-  }
-
-  /*let todoOk = listaComprobaciones.every((comprobacion) => comprobacion);
-  console.log(todoOk);
+  let todoOk = listaComprobaciones.every((comprobacion) => comprobacion);
 
   if (!todoOk) {
     imprimirErrores();
+    scrollA(document.documentElement);
     return;
-  }*/
+  }
   datosFinales.splice(0, datosFinales.length);
   datosFinales.push({
     precio: calculos.calcularSeguro(
@@ -288,41 +314,44 @@ formulario.addEventListener("submit", (event) => {
     cliente.fechaEmisionCarnet,
     cliente.fechaMatriculacion,
     cliente.motor,
-    "terceros");
+    "Terceros");
 
   let tercerosAmp = calculos.calcularSeguro(cliente.nacimiento,
     cliente.fechaEmisionCarnet,
     cliente.fechaMatriculacion,
     cliente.motor,
-    "tercerosAmp");
+    "Terceros Ampliado");
 
 
   let franquiciado = calculos.calcularSeguro(cliente.nacimiento,
     cliente.fechaEmisionCarnet,
     cliente.fechaMatriculacion,
     cliente.motor,
-    "franquiciado");
+    "Con Franquicia");
 
   let todoRiesgo = calculos.calcularSeguro(cliente.nacimiento,
     cliente.fechaEmisionCarnet,
     cliente.fechaMatriculacion,
     cliente.motor,
-    "todoRiesgo");
+    "A todo Riesgo");
 
-  console.log(terceros)
-  console.log(tercerosAmp)
-  console.log(franquiciado)
-  console.log(todoRiesgo)
+  let seguroId = "";
+
+  for (const seguros of tipoSeguro) {
+    if (seguros.tipo === cliente.cobertura) {
+      seguroId = seguros.id;
+    }
+  }
 
   // Mostrar el contenedor
-  console.log(contenedor);
   mostrar(contenedor);
   switchClass(contenedor, "oculto", false);
   switchClass(contenedor, "visible", true);
 
   rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, cliente.cobertura);
-  const divAlterado = document.getElementById(cliente.cobertura);
+  const divAlterado = document.getElementById(seguroId);
   mostrar(contenedor, divAlterado, "elegido");
+  scrollA(contenedor);
 });
 
 

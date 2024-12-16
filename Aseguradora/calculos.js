@@ -18,7 +18,7 @@ function penalizacionEdad(precioBase, edadCliente){
 function calcularDescuentoExperiencia(precioBase, antiguedadCarnet){
     let descuento = comprobaciones.comprobarAntiguedad(antiguedadCarnet, 5);
 
-    return descuento ? (precioBase * 0.1) : 0;
+    return descuento ? -(precioBase * 0.1) : 0;
 }
 
 function calcularPenalizacionTipoVehiculo(precioBase, tipoMotor){
@@ -48,7 +48,7 @@ export function calcularSeguro(edadCliente, antiguedadCarnet, fechaMatriculacion
 
     let precioBase = seguro.precio;
 
-    let penalizacionEdadCliente = penalizacionEdad(precioBase, edadCliente);  // Cambiado el nombre a penalizacionEdadCliente
+    let penalizacionEdadCliente = penalizacionEdad(precioBase, edadCliente);
 
     let descuentoExperiencia = calcularDescuentoExperiencia(precioBase, antiguedadCarnet);
 
@@ -57,7 +57,7 @@ export function calcularSeguro(edadCliente, antiguedadCarnet, fechaMatriculacion
     let precioBaseTipoSeguro = penalizacionAntiguedadCoche(precioBase, edadCoche);
 
     let precioFinal = precioBase +
-        penalizacionEdadCliente  // Cambiado aquí también
+        penalizacionEdadCliente
         + descuentoExperiencia
         + penalizacionTipoVehiculo
         + precioBaseTipoSeguro;

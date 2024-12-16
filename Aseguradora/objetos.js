@@ -1,21 +1,25 @@
 export const tipoSeguro = [
     {
-        tipo: "terceros",
+        id: "terceros",
+        tipo: "Terceros",
         precio: 500
     },
     {
-        tipo: "tercerosAmp",
+        id: "tercerosAmp",
+        tipo: "Terceros Ampliado",
         precio: 650
     },
     {
-        tipo: "franquiciado",
+        id: "franquiciado",
+        tipo: "Con Franquicia",
         precio: 750
     },
     {
-        tipo: "todoRiesgo",
+        id: "todoRiesgo",
+        tipo: "A todo Riesgo",
         precio: 1000
     }
-    // Tipo de seguro (Terceros, Terceros ampliado, Con franquicia,Todo riesgo) | Precio base tipo de seguro (500, 650, 750, 1000) 
+    // Tipo de seguro (Terceros, Terceros ampliado, Con franquicia,Todo riesgo) | Precio base tipo de seguro (500, 650, 750, 1000)
 ]
 
 
@@ -222,8 +226,8 @@ export const marcasModelos = [
 
 
 export const codigosPostales = [
-    { provincia: "Álava", inicio: "01000", fin: "01520"},
-    { provincia: "Albacete", inicio: "02000", fin: "02696"},
+    { provincia: "Álava", inicio: "01000", fin: "01520" },
+    { provincia: "Albacete", inicio: "02000", fin: "02696" },
     { provincia: "Alicante", inicio: "03000", fin: "03860" },
     { provincia: "Almería", inicio: "04000", fin: "04897" },
     { provincia: "Asturias", inicio: "33000", fin: "33993" },
@@ -370,7 +374,7 @@ export const restoDni = [
         letra: "e",
         resto: 22
     }
-    
+
 ]
 
 /* Fuente para los inicios de los códigos postales españoles: https://www.metelidrissi.com/inicios-de-codigos-postales-en-espana-por-provincias-para-woocommerce/  */

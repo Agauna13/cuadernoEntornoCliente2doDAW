@@ -21,7 +21,8 @@ export function comprobarNombreApellidos(nombreCliente, apellidoCliente) {
         );
 
         validez = false;
-    } else if (!apellido) {
+    }
+    if (!apellido) {
         errorLog.push(
             {
                 error: "Formato apellido incorrectos",
@@ -109,14 +110,22 @@ export function comprobarAntiguedad(fecha, rango, comprobacion) {
     const fechaLimite = new Date();
     fechaLimite.setFullYear(fechaLimite.getFullYear() - rango); // Restamos los años necesarios
 
-    if (fechaNacimiento > fechaLimite) {
+    if (fechaNacimiento > fechaLimite || isNaN(fechaNacimiento.getTime())) {
         // Si la fecha de nacimiento está después de la fecha límite
         switch (comprobacion) {
             case "nacimiento":
-                errorLog.push({
-                    error: "Revise la fecha de nacimiento, No puede ser menor de edad",
-                    nombre: "errorNacimiento"
-                });
+                if (isNaN(fechaNacimiento.getTime())) {
+                    errorLog.push({
+                        error: "Por Favor introduzca su fecha de nacimiento",
+                        nombre: "errorNacimiento"
+                    });
+                } else {
+                    errorLog.push({
+                        error: "Revise la fecha de nacimiento, No puede ser menor de edad",
+                        nombre: "errorNacimiento"
+                    });
+                }
+
                 break;
             case "emisionCarnet":
                 errorLog.push({
@@ -210,17 +219,39 @@ export function comprobarCodigoPostal(codigoPostal, provinciaCliente) {
 
 }
 
-export function comprobarFotoVehiculo(fotoVehiculo){
-    if(!/.jpg$/.test(fotoVehiculo.name)){ //fuente Francesc Sorà Quevedo
-        errorLog.push(
-            {
-                error: "Formato De imagen no soportado",
-                nombre: "errorImagen"
-            }
-        );
+export function comprobarFotoVehiculo(fotoVehiculo) {
+    const extensionesPermitidas = ["image/jpeg", "image/jpg"];
+    if (!extensionesPermitidas.includes(fotoVehiculo.type)) {
+        errorLog.push({
+            error: "Formato de imagen no soportado. Solo se permiten imágenes .jpg o .jpeg",
+            nombre: "errorImagen"
+        });
+        return false;
+    }
+    if (!/\.(jpg|jpeg)$/i.test(fotoVehiculo.name)) {
+        errorLog.push({
+            error: "Extensión de archivo incorrecta. Solo se permiten imágenes .jpg o .jpeg",
+            nombre: "errorImagen"
+        });
         return false;
     }
 
     return true;
+}
 
+export function comprobarFoto(fotoVehiculo, fotoSubida) {
+
+    if(fotoSubida){
+        return true;
+    }
+
+    if (!fotoVehiculo || !fotoSubida) {
+        errorLog.push({
+            nombre: "errorImagen",
+            error: "Debe subir una imagen del vehículo."
+        });
+        return false;
+    }
+    
+    return true;
 }

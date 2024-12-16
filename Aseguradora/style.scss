@@ -1,38 +1,61 @@
 body{
-    width: 1200px;
-    height: auto;
+    width: 1300px;
+    height: fit-content;
     margin: 0 auto;
+    background-image: url("./media/lada.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 
     font-family: Arial, Helvetica, sans-serif;
     scroll-behavior: smooth;
 }
-
+header{
+    background-color: transparent;
+    backdrop-filter: blur(3px);
+    position: static;
+    color: white;
+}
 main{
-
+    background-color: rgba($color: black, $alpha: 0.4);
+    height: fit-content;
+    color: white;
     .datosDiv{
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        
 
         form{
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 2vh;
                 input, select, option{
                     border: none;
+                    width: 25vw;
+                    background-color: transparent;
+                    color: white;
+                    font-weight: bolder;
                     &:hover{
                         background-color: black;
                         color: white;
                     }
                 }
                 button{
-                    border: 2px solid black;
+                    border: 3px solid white;
                     background: none;
-                    color: black;
+                    color: white;
+                    font-weight: bold;
                     padding: 1.5rem;
                     width: 30%;
                     align-self: center;
+
+                    &:hover{
+                        transform: scale(1.1);
+                    }
                 }
             }
         }
@@ -45,7 +68,6 @@ main{
             .drop-area{
                 height: 30vh;
                 width: 45vw;
-                border: 2px dashed rgb(124, 124, 124);
                 background-color: white;
                 display: flex;
                 flex-direction: column;
@@ -59,7 +81,11 @@ main{
                     height: 15vh;
                 }
                 p{
-                    color:  rgb(124, 124, 124);
+                    color:  black;
+                }
+
+                &:hover{
+                    transform: scale(1.1);
                 }
             }
         }
@@ -73,28 +99,34 @@ main{
         gap: 4%;
         .card{
             display: none;
-            grid-template-columns: 90%;
-            grid-template-rows: repeat(5, 15%);
-            text-align: left;
+            grid-template-rows: 1fr auto;
+            text-align: center;
+            align-content: center;
+            justify-content: center;
             margin: 0 0;
-            border: 2px solid blue;
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
             gap: 3%;
-    
+            background-color: rgba($color: #004236, $alpha: 0.8);
+            color: white;
+            border-radius: 10%;
             button{
-                background: rgba($color: #000000, $alpha: 0.5);
+                background: transparent;
+                color: white;
                 border: none;
-                border-radius: 7%;
-                height: fit-content;
-                width: 100%;
+                border-radius: 10%;
+                padding: 0.5rem 1rem;
+                text-align: center;
+                cursor: pointer;
     
                 &:hover{
-                    background-color: black;
+                    border: 2px solid white;
                     color: white;
+                    transform: scale(1.1);
                 }
             }
     
             &:hover{
-                background-color: lightblue;
+                background-color: rgba($color: #12004239, $alpha: 0.3);
             }
     
         }
@@ -114,12 +146,11 @@ main{
     display: grid !important;
 }
 .elegido{
-    background-color: brown;
-    color: white;
+    background-color: rgba($color:#190E4F, $alpha: 0.8)!important;
 }
 
 .error{
-    color: rgba($color: red, $alpha: 0.6);
+    color: rgba($color: red, $alpha: 1.0);
     font-size: 0.6rem;
 }
 
