@@ -1,12 +1,12 @@
 export const tipoSeguro = [
     {
         id: "terceros",
-        tipo: "Terceros",
+        tipo: "A Terceros",
         precio: 500
     },
     {
         id: "tercerosAmp",
-        tipo: "Terceros Ampliado",
+        tipo: "A Terceros Ampliado",
         precio: 650
     },
     {

@@ -60,6 +60,7 @@ main .datosDiv form button {
 }
 main .datosDiv form button:hover {
   transform: scale(1.1);
+  box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px, rgba(255, 255, 255, 0.12) 0px -12px 30px, rgba(255, 255, 255, 0.12) 0px 4px 6px, rgba(255, 255, 255, 0.17) 0px 12px 13px, rgba(255, 255, 255, 0.09) 0px -3px 5px;
 }
 main .uploader {
   display: flex;
@@ -91,43 +92,63 @@ main .uploader .drop-area:hover {
 
 .container {
   display: none;
-  grid-template-rows: repeat(2, 30vh);
-  grid-template-columns: repeat(2, 48%);
-  gap: 4%;
+  grid-template-rows: 10vh 80vh;
 }
-.container .card {
-  display: none;
+.container h2 {
+  justify-self: center;
+}
+.container .cardContainer {
+  display: grid;
+  grid-template-rows: repeat(2, 35vh);
+  grid-template-columns: repeat(2, 30%);
+  gap: 4%;
+  justify-content: center;
+  height: 90vh;
+}
+.container .cardContainer .card {
+  display: grid;
   grid-template-rows: 1fr auto;
+  grid-template-columns: 60%;
   text-align: center;
   align-content: center;
   justify-content: center;
-  margin: 0 0;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   gap: 3%;
   background-color: rgba(0, 66, 54, 0.8);
   color: white;
   border-radius: 10%;
+  padding: 3%;
+  box-sizing: border-box;
 }
-.container .card button {
+.container .cardContainer .card button {
   background: transparent;
-  color: white;
-  border: none;
   border-radius: 10%;
   padding: 0.5rem 1rem;
   text-align: center;
   cursor: pointer;
+  box-sizing: border-box;
 }
-.container .card button:hover {
+.container .cardContainer .card button:hover {
   border: 2px solid white;
   color: white;
   transform: scale(1.1);
 }
-.container .card:hover {
-  background-color: rgba(18, 0, 66, 0.3);
+.container .cardContainer .card button#contratar {
+  border: 2px solid green;
+  color: green;
+  box-shadow: rgba(0, 128, 0, 0.25) 0px 54px 55px, rgba(0, 128, 0, 0.12) 0px -12px 30px, rgba(0, 128, 0, 0.12) 0px 4px 6px, rgba(0, 128, 0, 0.17) 0px 12px 13px, rgba(0, 128, 0, 0.09) 0px -3px 5px;
+}
+.container .cardContainer .card button#descartar {
+  border: 2px solid red;
+  color: red;
+  box-shadow: rgba(255, 0, 0, 0.25) 0px 54px 55px, rgba(255, 0, 0, 0.12) 0px -12px 30px, rgba(255, 0, 0, 0.12) 0px 4px 6px, rgba(255, 0, 0, 0.17) 0px 12px 13px, rgba(255, 0, 0, 0.09) 0px -3px 5px;
+}
+.container .cardContainer .card:hover {
+  background-color: rgba(18, 0, 66, 0.6);
+  box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px, rgba(255, 255, 255, 0.12) 0px -12px 30px, rgba(255, 255, 255, 0.12) 0px 4px 6px, rgba(255, 255, 255, 0.17) 0px 12px 13px, rgba(255, 255, 255, 0.09) 0px -3px 5px;
 }
 
 .oculto {
-  display: none;
+  visibility: hidden;
 }
 
 .flex {

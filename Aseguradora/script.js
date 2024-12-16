@@ -15,7 +15,7 @@ var datosFinales = [];
 
 //Elementos del Dom
 
-//Select
+//Elementos select
 const selectMarca = document.getElementById("marcasModelos");
 const selectModelo = document.getElementById("modeloVehiculo");
 const selectComunidad = document.getElementById("comunidad");
@@ -23,7 +23,7 @@ const selectProvincia = document.getElementById("provincia");
 const selectVehiculo = document.getElementById("tipoVehiculo");
 const selectSeguro = document.getElementById("tipoSeguro");
 
-//Contenedores
+//Elementos Contenedores
 var contenedor = document.getElementById("container");
 
 const dropArea = document.getElementById("file-input").parentElement;
@@ -31,20 +31,10 @@ const fileInput = document.getElementById("file-input");
 const previewContainer = document.getElementById("previewContainer");
 
 
-
-//Manejando eventos del submit
-const formulario = document.getElementById("formulario");
-
-
-formulario.addEventListener("submit", (event) => {
-  event.preventDefault();
-});
-
-//Rellenando los Select
-
-
+//Rellenando los Select que deben cargarse al iniciar la página
 function fillSelect(objeto, elementoHtml, key) {
-  elementoHtml.innerHTML = "";
+  elementoHtml.innerHTML = ""; //Vaciamos cualquier valor residual que pueda tener
+  //Recorremos el objeto creando un elemento option a cada iteracion con la información de la clave y valor
   objeto.forEach((item) => {
     const option = document.createElement("option");
     option.value = item[key];
@@ -52,7 +42,7 @@ function fillSelect(objeto, elementoHtml, key) {
     elementoHtml.appendChild(option);
   });
 }
-
+//Con una misma función podemos rellenar todos los Select que se cargan por defecto
 fillSelect(comunidades, selectComunidad, "comunidad");
 fillSelect(marcasModelos, selectMarca, "marca");
 fillSelect(tipoVehiculo, selectVehiculo, "tipo");
@@ -143,10 +133,6 @@ contenedor.addEventListener("click", (event) => {
 });
 
 //eventos del drag and drop
-
-// Elementos directamente referenciados por su ID
-
-
 dropArea.addEventListener("dragover", (event) => {
   event.preventDefault();
   //dropArea.classList.add("highlight");
@@ -173,7 +159,7 @@ function handleFile(file) {
   //funciones.comprobarFotoVehiculo(file);
   if (!funciones.comprobarFotoVehiculo(file)) {
     previewContainer.innerHTML = "<p Style = 'color: red'>El archivo debe ser una imagen válida.</p>";
-      errorLog.push({
+      funciones.errorLog.push({
         error: "Formato de imagen no soportado. Solo se permiten imágenes .jpg o .jpeg",
         nombre: "errorImagen"
       });
@@ -252,6 +238,7 @@ function rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, segur
 
 }
 formulario.addEventListener("submit", (event) => {
+  event.preventDefault();
   limpiaErrores();
   funciones.errorLog.length = 0;
   datosFinales.length = 0;
@@ -291,13 +278,13 @@ formulario.addEventListener("submit", (event) => {
     funciones.comprobarCodigoPostal(cliente.codigoPostal, cliente.provincia),
     funciones.comprobarFoto(cliente.fotoVehiculo, fotoSubida)
   ];
-  let todoOk = listaComprobaciones.every((comprobacion) => comprobacion);
+  /*let todoOk = listaComprobaciones.every((comprobacion) => comprobacion);
 
   if (!todoOk) {
     imprimirErrores();
     scrollA(document.documentElement);
     return;
-  }
+  }*/
   datosFinales.splice(0, datosFinales.length);
   datosFinales.push({
     precio: calculos.calcularSeguro(
@@ -314,13 +301,13 @@ formulario.addEventListener("submit", (event) => {
     cliente.fechaEmisionCarnet,
     cliente.fechaMatriculacion,
     cliente.motor,
-    "Terceros");
+    "A Terceros");
 
   let tercerosAmp = calculos.calcularSeguro(cliente.nacimiento,
     cliente.fechaEmisionCarnet,
     cliente.fechaMatriculacion,
     cliente.motor,
-    "Terceros Ampliado");
+    "A Terceros Ampliado");
 
 
   let franquiciado = calculos.calcularSeguro(cliente.nacimiento,
@@ -334,6 +321,16 @@ formulario.addEventListener("submit", (event) => {
     cliente.fechaMatriculacion,
     cliente.motor,
     "A todo Riesgo");
+
+    console.log(terceros);
+    console.log(tercerosAmp)
+    console.log(franquiciado)
+    console.log(todoRiesgo)
+
+    console.log(cliente.cobertura)
+
+
+
 
   let seguroId = "";
 

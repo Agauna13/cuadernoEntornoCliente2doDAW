@@ -1,11 +1,6 @@
-
 import * as comprobaciones from "./comprobaciones.js";
 
 import * as objetos from "./objetos.js";
-
-
-export var listaPrecios = [];
-
 
 
 function penalizacionEdad(precioBase, edadCliente){
@@ -56,13 +51,11 @@ export function calcularSeguro(edadCliente, antiguedadCarnet, fechaMatriculacion
 
     let precioBaseTipoSeguro = penalizacionAntiguedadCoche(precioBase, edadCoche);
 
-    let precioFinal = precioBase +
+    return precioBase +
         penalizacionEdadCliente
         + descuentoExperiencia
         + penalizacionTipoVehiculo
         + precioBaseTipoSeguro;
-
-    return precioFinal;
 }
 
 

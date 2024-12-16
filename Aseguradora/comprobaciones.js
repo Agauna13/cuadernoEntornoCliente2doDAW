@@ -61,7 +61,7 @@ export function comprobarDni(dni) {
         return false;
     }
 
-    return (letraObjetivo && numero % 23 == letraObjetivo.resto);
+    return (letraObjetivo && numero % 23 === letraObjetivo.resto);
 
 }
 
@@ -83,10 +83,10 @@ export function comprobarEmail(email) {
 
 
 export function comprobarTelefono(telefono) {
-    //comprobamos que el primer dígito sea un 6 o un 7 y que contenga 9 dígitos en total.
+    //Comprobamos que el primer dígito sea un 6 o un 7 y que contenga 9 dígitos en total.
     //(6 o 7 y 8 dígitos cualquiera entre 0-9)
     telefono = telefono.toString();//convertimos a string para hacer una comprobacion mediante regex
-    const correcto = telefono.match(/^[6-7]{1}[0-9]{8}$/g);
+    const correcto = telefono.match(/^[6-7][0-9]{8}$/g);
 
     if (!correcto) {
         errorLog.push(
@@ -104,7 +104,7 @@ export function comprobarTelefono(telefono) {
 
 
 //Comprobamos que la fecha que le pasamos sea anterior a la actual según el rango en años.
-// (Ej: Para la mayoría de edad, el rango son 18 años).
+// (Ej.: Para la mayoría de edad, el rango son 18 años).
 export function comprobarAntiguedad(fecha, rango, comprobacion) {
     const fechaNacimiento = new Date(fecha);
     const fechaLimite = new Date();
