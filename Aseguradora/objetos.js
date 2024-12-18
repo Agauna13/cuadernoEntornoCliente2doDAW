@@ -1,3 +1,5 @@
+
+//Relacionamos el tipo de seguro, con el id dentro de la estructura html y el precio base del mismo
 export const tipoSeguro = [
     {
         id: "terceros",
@@ -23,6 +25,8 @@ export const tipoSeguro = [
 ]
 
 
+
+//Relacionamos el motor con la penalizacion en porcentaje absoluto, que despues trataremos
 export const tipoVehiculo = [
     {
         tipo: "Diesel",
@@ -46,7 +50,7 @@ export const tipoVehiculo = [
     //Tipo vehículo (Diesel, Gasolina, Hibrido, Eléctrico) | Penalización por el tipo de vehículo (20%, 15%, 5%, 0%)
 ]
 
-
+//Relacionamos las comunidades con las provincias contenidas en esas comunidades
 export const comunidades = [
     {
         comunidad: "Andalucía",
@@ -127,7 +131,7 @@ export const comunidades = [
 ];
 
 
-
+//Objeto que relaciona marcas con los modelos de esa marca
 export const marcasModelos = [
     {
         marca: "Toyota",
@@ -224,7 +228,8 @@ export const marcasModelos = [
 ];
 
 
-
+//Objeto que relaciona la provincia y el inicio del rango de sus codigos postales con el final de dicho rango
+/* Fuente para los inicios de los códigos postales españoles: https://www.metelidrissi.com/inicios-de-codigos-postales-en-espana-por-provincias-para-woocommerce/  */
 export const codigosPostales = [
     { provincia: "Álava", inicio: "01000", fin: "01520" },
     { provincia: "Albacete", inicio: "02000", fin: "02696" },
@@ -280,101 +285,32 @@ export const codigosPostales = [
     { provincia: "Zaragoza", inicio: "50000", fin: "50840" }
 ];
 
+
+//Objeto que relaciona la letra de un dni con el resto de dividir el número de dni entre 23 (numero%23)
 export const restoDni = [
-    {
-        letra: "t",
-        resto: 0
-    },
-    {
-        letra: "r",
-        resto: 1
-    },
-    {
-        letra: "w",
-        resto: 2
-    },
-    {
-        letra: "a",
-        resto: 3
-    },
-    {
-        letra: "g",
-        resto: 4
-    },
-    {
-        letra: "m",
-        resto: 5
-    },
-    {
-        letra: "y",
-        resto: 6
-    },
-    {
-        letra: "f",
-        resto: 7
-    },
-    {
-        letra: "p",
-        resto: 8
-    },
-    {
-        letra: "d",
-        resto: 9
-    },
-    {
-        letra: "x",
-        resto: 10
-    },
-    {
-        letra: "b",
-        resto: 11
-    },
-    {
-        letra: "n",
-        resto: 12
-    },
-    {
-        letra: "j",
-        resto: 13
-    },
-    {
-        letra: "z",
-        resto: 14
-    },
-    {
-        letra: "s",
-        resto: 15
-    },
-    {
-        letra: "q",
-        resto: 16
-    },
-    {
-        letra: "v",
-        resto: 17
-    },
-    {
-        letra: "h",
-        resto: 18
-    },
-    {
-        letra: "l",
-        resto: 19
-    },
+    { letra: "t", resto: 0 },
+    { letra: "r", resto: 1 },
+    { letra: "w", resto: 2 },
+    { letra: "a", resto: 3 },
+    { letra: "g", resto: 4 },
+    { letra: "m", resto: 5 },
+    { letra: "y", resto: 6 },
+    { letra: "f", resto: 7 },
+    { letra: "p", resto: 8 },
+    { letra: "d", resto: 9 },
+    { letra: "x", resto: 10 },
+    { letra: "b", resto: 11 },
+    { letra: "n", resto: 12 },
+    { letra: "j", resto: 13 },
+    { letra: "z", resto: 14 },
+    { letra: "s", resto: 15 },
+    { letra: "q", resto: 16 },
+    { letra: "v", resto: 17 },
+    { letra: "h", resto: 18 },
+    { letra: "l", resto: 19 },
+    { letra: "c", resto: 20 },
+    { letra: "k", resto: 21 },
+    { letra: "e", resto: 22 }
+];
 
-    {
-        letra: "c",
-        resto: 20
-    },
-    {
-        letra: "k",
-        resto: 21
-    },
-    {
-        letra: "e",
-        resto: 22
-    }
 
-]
-
-/* Fuente para los inicios de los códigos postales españoles: https://www.metelidrissi.com/inicios-de-codigos-postales-en-espana-por-provincias-para-woocommerce/  */

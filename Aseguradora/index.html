@@ -16,10 +16,13 @@
     <div class="datosDiv">
       <form action="" id="formulario">
         <h3>Datos Personales</h3>
+        <label>Nombre</label>
         <input type="text" placeholder="Nombre" id="nombreCliente" />
         <p class="oculto" id="errorNombre"></p>
+        <label>Apellido</label>
         <input type="text" placeholder="Apellido" id="apellidoCliente" />
         <p class="oculto" id="errorApellido"></p>
+        <label>Sexo</label>
         <select name="sexo" id="sexo">
           <option value="hombre">Hombre</option>
           <option value="mujer">Mujer</option>
@@ -28,17 +31,23 @@
         <label>Fecha De Nacimiento</label>
         <input type="date" placeholder="Fecha de Nacimiento" id="fechaNacimiento" />
         <p class="oculto" id="errorNacimiento"></p>
+        <label>Numero de identificación</label>
         <input type="text" placeholder="DNI - NIE" id="numeroDocumento" />
         <p class="oculto" id="errorDni"></p>
+        <label>Email</label>
         <input type="text" placeholder="E-mail" id="email" />
         <p class="oculto" id="errorEmail"></p>
+        <label>Teléfono</label>
         <input type="number" placeholder="Teléfono" id="telefono" />
         <p class="oculto" id="errorTelefono"></p>
+        <label>Seleccione su comunidad autónoma</label>
         <select name="comunidad" id="comunidad"></select>
         <p class="oculto" id="errorComunidad"></p>
+        <label>Seleccione su provincia</label>
         <select name="provincia" id="provincia">
           <option value="">Seleccione una provincia</option>
         </select>
+        <label>Introduzca su código postal</label>
         <input type="number" placeholder="Código Postal" id="codigoPostal" />
         <p class="oculto" id="errorCodigoPostal"></p>
         <h3>Datos del vehículo</h3>
@@ -51,12 +60,14 @@
         <label>Matrícula</label>
         <input type="text" placeholder="Matrícula" id="matricula" />
         <p class="oculto" id="errorMatricula"></p>
+        <h3>Seleccione el tipo de seguro que desee contratar</h3>
         <select name="tipoSeguro" id="tipoSeguro"></select>
 
+        <label>Seleccione su tipo de vehículo</label>
         <select id="tipoVehiculo"></select>
-
+        <label>Seleccione la marca</label>
         <select id="marcasModelos"></select>
-
+        <label>Seleccione el modelo</label>
         <select id="modeloVehiculo">
           <option value="">Seleccione un modelo</option>
         </select>
@@ -70,6 +81,16 @@
         </div>
         <div id="previewContainer"></div>
         <p class="oculto" id="errorImagen"></p>
+        <h3>Acepto los <a id="terminosYcondiciones">Términos y condiciones</a></h3>
+        <!--<input type="checkbox" id="checkbox">-->
+        <div class="checkbox-wrapper-55">
+          <label class="rocker rocker-small">
+            <input type="checkbox" id="checkbox">
+            <span class="switch-left">Yes</span>
+            <span class="switch-right">No</span>
+          </label>
+        </div>
+        <p class="oculto" id="errorCheckbox"></p>
         <button type="submit" id="botonSubmit">Calcula tu seguro</button>
       </form>
       

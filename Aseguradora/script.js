@@ -23,13 +23,16 @@ const selectProvincia = document.getElementById("provincia");
 const selectVehiculo = document.getElementById("tipoVehiculo");
 const selectSeguro = document.getElementById("tipoSeguro");
 
-//Elementos Contenedores
+//Elementos y Contenedores
 var contenedor = document.getElementById("container");
 var contenedorTarjetas = document.getElementById("cardContainer");
 
 const dropArea = document.getElementById("file-input").parentElement;
 const fileInput = document.getElementById("file-input");
 const previewContainer = document.getElementById("previewContainer");
+const checkbox = document.getElementById("checkbox");
+
+const terminosYcondiciones = document.getElementById("terminosYcondiciones");
 
 
 //Rellenando los Select que deben cargarse al iniciar la página
@@ -49,6 +52,9 @@ fillSelect(marcasModelos, selectMarca, "marca");
 fillSelect(tipoVehiculo, selectVehiculo, "tipo");
 fillSelect(tipoSeguro, selectSeguro, "tipo");
 
+
+//Ésta funcion nos permite Rellenar los select dependientes en función de la marca
+//o comunidad autonoma elegidas
 function fillDependantSelect(selectedItem, selectedObject, targetElement) {
   let clave, valor;
   if (selectedObject === marcasModelos) {
@@ -71,28 +77,36 @@ function fillDependantSelect(selectedItem, selectedObject, targetElement) {
   }
 }
 
+
+//funcion que ayuda a filtrar qué select queremos rellenar, modularizado asi para evitar
+//repetir el contenido en los eventListeners de más abajo
 function handleSelectChange(event, selectedObject, targetElement) {
   const selectedItem = event.target.value;
   targetElement.innerHTML = '<option value="">Seleccione una opción</option>';
 
+  //Rellenamos el select dependiente en funcion del item seleccionado en el select 'padre'
   fillDependantSelect(selectedItem, selectedObject, targetElement);
 }
 
+
+//event listener que nos mira si ha cambiado el valor del select de comunidades autónomas
 selectComunidad.addEventListener("change", (event) => {
   handleSelectChange(event, comunidades, selectProvincia);
 });
 
+
+//event listener que nos mira si ha cambiado el valor del select de las marcas de vehículo
 selectMarca.addEventListener("change", (event) => {
   handleSelectChange(event, marcasModelos, selectModelo);
 });
 
 
 
-//Manipulación de las tarjetas
+//Manipulación de las tarjetas y clases css en el Dom para jugar con la visibilidad
 
 
-
-function switchClass(elemento, clase, addRemove) {
+//fiuncion que mediante parámetros nos cambia la clase de un objeto a voluntad para darle un aspecto u otro
+function switchClass(elemento, clase, addRemove) {//addRemove es un booleano que nos indica si debemos 'encender' o 'apagar' esa clase
   if (addRemove) {
     elemento.classList.add(clase);
   } else {
@@ -101,7 +115,7 @@ function switchClass(elemento, clase, addRemove) {
 
 }
 
-//Si el cliente cambiar el tipo de seguro en el formulario, volvemos a mostrarle todas las opciones.
+//funcion que nos muestra los elementos del dom o nos cambia de color el elemento en cuestión según el parámetro que le pasemos
 function mostrar(elemento, elementoAlterado, alteracion) {
   let arrElementos = elemento.children;
   for (const card of arrElementos) {
@@ -109,7 +123,6 @@ function mostrar(elemento, elementoAlterado, alteracion) {
       switchClass(card, "oculto", false);
       switchClass(card, "visible", true);
     }
-
     if (card === elementoAlterado) {
       switchClass(card, alteracion, true);
     } else {
@@ -118,12 +131,13 @@ function mostrar(elemento, elementoAlterado, alteracion) {
   }
 }
 
-
+//event listener que nos mira qué botón estamos seleccionando dentro del contenedor para saber si hemos 'contratado' o 'descartado' un seguro
 contenedor.addEventListener("click", (event) => {
   if (event.target.id === "contratar") {
     const padre = event.target.parentElement;
     mostrar(contenedor, padre, "elegido");
     alert("Gracias por contratar. Atentamente tu asesor de seguros Alan Adamson");
+    location.reload();
   }
 
   if (event.target.id === "descartar") {
@@ -133,33 +147,59 @@ contenedor.addEventListener("click", (event) => {
   }
 });
 
+
+//Ventana con Términos y condiciones
+terminosYcondiciones.addEventListener("click", (event) =>{
+    event.preventDefault();
+
+    const newWindow = window.open('', 'Ventanita', 'width=400,height=300');
+     newWindow.document.write(`
+      <html>
+      <head><title>Párrafo</title></head>
+      <body>
+          <h2>Seccion 1</h1>
+          <p>Acepta que le enviemos propaganda por todos los medios de los
+          que dispone esta aseguradora, los cuales incluyen: email,
+          teléfono, whatsapp, carta, que le dejemos un flyer debajo
+          del limpiaparabrisas, que le deslizemos un flyer por el
+          espacio que deje abierto de su ventana en los días de calor,
+          que se lo demos al perro que se ha dejado en el coche (eso no se hace).</p>
+
+          <h2>Seccion 2</h2>
+          <p>Al Darle al check de aceptación, acepta ponerle a Alan un 10 en este trabajo</p>
+
+      </body>
+      </html>
+  `);
+  newWindow.document.close();
+  
+
+});
+
 //eventos del drag and drop
+
+//prevenimos los comportamientos por defecto del dragover
 dropArea.addEventListener("dragover", (event) => {
   event.preventDefault();
-  //dropArea.classList.add("highlight");
 });
 
+//escucha del evento que se dispara al soltar el archivo en el area
 dropArea.addEventListener("drop", (event) => {
   event.preventDefault();
+  //se crea un array con las imagenes introducidas
   const files = event.dataTransfer.files;
+  //si es mayor a 0 este array
   if (files.length) {
+    //elegimos la unica imagen del array en la posicion 0
     const file = files[0];
-    handleFile(file);
-  }
-});
-fileInput.addEventListener("change", () => {
-  const files = fileInput.files;
 
-  if (files.length) {
-    const file = files[0];
     handleFile(file);
   }
 });
 
 
+//funcion que nos comprueba en el drop mismo si la imágen tiene el formato correcto
 function handleFile(file) {
-  console.log(funciones.comprobarFotoVehiculo(file));
-  //funciones.comprobarFotoVehiculo(file);
   if (!funciones.comprobarFotoVehiculo(file)) {
     previewContainer.innerHTML = "<p Style = 'color: red'>El archivo debe ser una imagen válida.</p>";
       funciones.errorLog.push({
@@ -168,17 +208,24 @@ function handleFile(file) {
       });
     return;
   }
+
+  //si la imagen es correcta, nos crea un elemento img y lo mete a la zona de previsualizacion
   const img = document.createElement("img");
   img.src = URL.createObjectURL(file);
   img.alt = "Vista previa de la imagen cargada";
   img.style.maxWidth = "100%";
   img.style.maxHeight = "200px";
 
-  // Limpiar contenedor previo y añadir imagen
-  previewContainer.innerHTML = ""; // Limpia cualquier contenido previo
+  // Limpiar contenedor previo
+  previewContainer.innerHTML = "";
+  //inserta el elemento que hemos generado
   previewContainer.appendChild(img);
 }
 
+
+
+//función simple para que nos haga scroll al principio del formulario si éste estaba mal o
+//a la zona de tarjetas si todo está bien. para mejorar la experiencia de usuario
 function scrollA(elemento) {
   const target = elemento || document.documentElement;
 
@@ -192,7 +239,8 @@ function scrollA(elemento) {
 
 }
 
-
+//funcion que nos imprime los errores en el elemento correspondiente al id asociado a su error
+//mostramos todos los elementos que se asocien a un error del array errorLog
 function imprimirErrores() {
   for (const errores of funciones.errorLog) {
     let target = document.getElementById(errores.nombre);
@@ -203,6 +251,9 @@ function imprimirErrores() {
 
 }
 
+
+//Vaciamos la lista de errores para volver a comprobar y ocultamos 
+//todos los elementos que no estén asociados a un error en erroLog
 function limpiaErrores() {
   for (const errores of funciones.errorLog) {
     const target = document.getElementById(errores.nombre);
@@ -213,7 +264,7 @@ function limpiaErrores() {
 }
 
 
-
+//rellenamos las tarjetas en funcion de los parametros elegidos por el cliente.
 function rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, seguro) {
   let tarjetas = contenedor.querySelectorAll(".card");
 
@@ -242,14 +293,18 @@ function rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, segur
   }
 
 }
+
+//Escuchador del evento submit del formulario.
+//al dispararse, limpiamos cualquier variable previa, limpiamos los errores,
+//y comprobamos que no haya una foto en el contenedor de previsualizacion
 formulario.addEventListener("submit", (event) => {
   event.preventDefault();
   limpiaErrores();
   funciones.errorLog.length = 0;
   datosFinales.length = 0;
-  console.log(funciones.errorLog);
   var fotoSubida = previewContainer.hasChildNodes();
-  console.log(fotoSubida);
+
+  //Guardamos los valores elegidos por el cliente en un objeto cliente para más claridad y mejor manejo de las variables
   const cliente = {
     nombre: document.getElementById("nombreCliente").value,
     apellido: document.getElementById("apellidoCliente").value,
@@ -271,6 +326,8 @@ formulario.addEventListener("submit", (event) => {
     modelo: selectModelo.value,
   };
 
+
+  //Hacemos una lista de comprobaciones que podremos iterar para validar todos los campos necesarios
   let listaComprobaciones = [
     funciones.comprobarNombreApellidos(cliente.nombre, cliente.apellido),
     funciones.comprobarAntiguedad(cliente.nacimiento, 18, "nacimiento"),
@@ -281,15 +338,22 @@ formulario.addEventListener("submit", (event) => {
     funciones.comprobarAntiguedad(cliente.fechaMatriculacion, 0, "fechaMatriculacion"),
     funciones.comprobarMatricula(cliente.matricula),
     funciones.comprobarCodigoPostal(cliente.codigoPostal, cliente.provincia),
-    funciones.comprobarFoto(cliente.fotoVehiculo, fotoSubida)
+    funciones.comprobarFoto(cliente.fotoVehiculo, fotoSubida),
+    funciones.validarCheckbox(checkbox)
   ];
-  let todoOk = listaComprobaciones.every((comprobacion) => comprobacion);
 
+  //Recorremos la lista de comprobaciones mirando si todo es true (caso idoneo) o todo es false
+  /*let todoOk = listaComprobaciones.every((comprobacion) => comprobacion);
+
+
+  //Si al recorrer las comprobaciones hay algun false, imprimimos los errores y hacemos scroll al inicio de la página
   if (!todoOk) {
     imprimirErrores();
     scrollA(document.documentElement);
     return;
-  }
+  }*/
+
+  //si todas las comprobaciones pasan, rellenamos el objeto con el seguro elegido por el cliente y el precio
   datosFinales.splice(0, datosFinales.length);
   datosFinales.push({
     precio: calculos.calcularSeguro(
@@ -302,6 +366,8 @@ formulario.addEventListener("submit", (event) => {
     seguroElegido: cliente.cobertura,
   });
 
+
+  //Calculamos el seguro para cada tipo de seguro
   let terceros = calculos.calcularSeguro(cliente.nacimiento,
     cliente.fechaEmisionCarnet,
     cliente.fechaMatriculacion,
@@ -327,14 +393,6 @@ formulario.addEventListener("submit", (event) => {
     cliente.motor,
     "A todo Riesgo");
 
-    console.log(terceros);
-    console.log(tercerosAmp)
-    console.log(franquiciado)
-    console.log(todoRiesgo)
-
-    console.log(cliente.cobertura)
-
-
 
   //Extraemos el Id del seguro elegido por el cliente
   let seguroId = "";
@@ -344,18 +402,22 @@ formulario.addEventListener("submit", (event) => {
       seguroId = seguros.id;
     }
   }
-  console.log(seguroId)
 
   // Mostrar el contenedor de tarjetas con los precios en funcion de la cobertura elegida por el cliente
-  mostrar(contenedor);
   switchClass(contenedor, "oculto", false);
   switchClass(contenedor, "visible", true);
 
 
   //Imprimimos las tarjetas rellenadas con el precio que toca
   rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, seguroId);
+
+  //elegimos el div en funcion del seguro elegido por el cliente
   const divAlterado = document.getElementById(seguroId);
+
+  //Mostramos ese div con un estilo diferente
   mostrar(contenedorTarjetas, divAlterado, "elegido");
+
+  //hacemos scroll hacia las tarjetas
   scrollA(contenedor);
 });
 
