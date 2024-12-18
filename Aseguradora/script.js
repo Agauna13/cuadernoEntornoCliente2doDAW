@@ -25,6 +25,7 @@ const selectSeguro = document.getElementById("tipoSeguro");
 
 //Elementos Contenedores
 var contenedor = document.getElementById("container");
+var contenedorTarjetas = document.getElementById("cardContainer");
 
 const dropArea = document.getElementById("file-input").parentElement;
 const fileInput = document.getElementById("file-input");
@@ -118,11 +119,11 @@ function mostrar(elemento, elementoAlterado, alteracion) {
 }
 
 
-
 contenedor.addEventListener("click", (event) => {
   if (event.target.id === "contratar") {
     const padre = event.target.parentElement;
     mostrar(contenedor, padre, "elegido");
+    alert("Gracias por contratar. Atentamente tu asesor de seguros Alan Adamson");
   }
 
   if (event.target.id === "descartar") {
@@ -154,6 +155,8 @@ fileInput.addEventListener("change", () => {
     handleFile(file);
   }
 });
+
+
 function handleFile(file) {
   console.log(funciones.comprobarFotoVehiculo(file));
   //funciones.comprobarFotoVehiculo(file);
@@ -212,10 +215,12 @@ function limpiaErrores() {
 
 
 function rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, seguro) {
-  let tarjetas = contenedor.children;
+  let tarjetas = contenedor.querySelectorAll(".card");
 
   for (const tarjeta of tarjetas) {
     let precioElemento = tarjeta.querySelector("#precioSeguro");
+    console.log(tarjeta.id)
+    console.log(seguro)
     if (tarjeta.id === seguro) {
       precioElemento.textContent = datosFinales[0].precio;
     } else {
@@ -278,13 +283,13 @@ formulario.addEventListener("submit", (event) => {
     funciones.comprobarCodigoPostal(cliente.codigoPostal, cliente.provincia),
     funciones.comprobarFoto(cliente.fotoVehiculo, fotoSubida)
   ];
-  /*let todoOk = listaComprobaciones.every((comprobacion) => comprobacion);
+  let todoOk = listaComprobaciones.every((comprobacion) => comprobacion);
 
   if (!todoOk) {
     imprimirErrores();
     scrollA(document.documentElement);
     return;
-  }*/
+  }
   datosFinales.splice(0, datosFinales.length);
   datosFinales.push({
     precio: calculos.calcularSeguro(
@@ -331,7 +336,7 @@ formulario.addEventListener("submit", (event) => {
 
 
 
-
+  //Extraemos el Id del seguro elegido por el cliente
   let seguroId = "";
 
   for (const seguros of tipoSeguro) {
@@ -339,17 +344,23 @@ formulario.addEventListener("submit", (event) => {
       seguroId = seguros.id;
     }
   }
+  console.log(seguroId)
 
-  // Mostrar el contenedor
+  // Mostrar el contenedor de tarjetas con los precios en funcion de la cobertura elegida por el cliente
   mostrar(contenedor);
   switchClass(contenedor, "oculto", false);
   switchClass(contenedor, "visible", true);
 
-  rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, cliente.cobertura);
+
+  //Imprimimos las tarjetas rellenadas con el precio que toca
+  rellenartarjetas(terceros, tercerosAmp, franquiciado, todoRiesgo, seguroId);
   const divAlterado = document.getElementById(seguroId);
-  mostrar(contenedor, divAlterado, "elegido");
+  mostrar(contenedorTarjetas, divAlterado, "elegido");
   scrollA(contenedor);
 });
+
+
+
 
 
 
