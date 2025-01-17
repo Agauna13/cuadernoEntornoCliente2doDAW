@@ -1,0 +1,64 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+  }
+  header{
+    width: 100vw;
+    text-align: center;
+  }
+  #tablero{
+    display: flex;
+    height: 100vh;
+  }
+  .container {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  .list {
+    flex: 1;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background: #f9f9f9;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .list h2 {
+    text-align: center;
+    margin: 0 0 10px 0;
+  }
+  .task {
+    padding: 8px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: grab;
+  }
+  .task:active {
+    cursor: grabbing;
+  }
+  .task input {
+    width: calc(100% - 10px);
+    border: none;
+    font-size: 14px;
+  }
+  .task input:focus {
+    outline: none;
+  }
+  .add-task {
+    padding: 10px;
+    border: 2px dashed #aaa;
+    text-align: center;
+    cursor: pointer;
+    background: #eaeaea;
+    border-radius: 5px;
+  }
+  .add-task:hover {
+    background: #ddd;
+  }
