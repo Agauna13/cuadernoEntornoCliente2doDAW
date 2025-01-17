@@ -11,24 +11,25 @@
       <h1>To Do List</h1>
     </header>
     <main id="tablero">
-      <div class="container">
         <div class="list" id="todo">
           <h2>Por Hacer</h2>
-          <div class="add-task" onclick="addTask('todo')">+ Agregar Tarea</div>
+          <div class="add-task" id="todoButton" >+ Agregar Tarea</div>
         </div>
         <div class="list" id="in-progress">
           <h2>En Curso</h2>
-          <div class="add-task" onclick="addTask('in-progress')">
+          <div class="add-task" id="inProgressButton">
             + Agregar Tarea
           </div>
         </div>
         <div class="list" id="done">
           <h2>Hechas</h2>
-          <div class="add-task" onclick="addTask('done')">+ Agregar Tarea</div>
+          <div class="add-task" id="doneButton" >+ Agregar Tarea</div>
         </div>
-      </div>
     </main>
 
     <script src="index.js"></script>
   </body>
 </html>
+
+
+<!--onclick="addTask('done')"   onclick="addTask('in-progress')"  onclick="addTask('todo')"-->
