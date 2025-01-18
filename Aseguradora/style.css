@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   width: 1300px;
   height: -moz-fit-content;
@@ -37,6 +38,10 @@ main .datosDiv form {
   flex-direction: column;
   align-items: center;
   gap: 2vh;
+  /*Crédito del diseño del checkbox: https://getcssscan.com/css-checkboxes-examples
+  /*********************************************************************/
+  /* Keyboard Users */
+  /******************************************************************************/
 }
 main .datosDiv form input, main .datosDiv form select, main .datosDiv form option {
   border: none;
@@ -60,6 +65,134 @@ main .datosDiv form button {
 }
 main .datosDiv form button:hover {
   transform: scale(1.1);
+  box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px, rgba(255, 255, 255, 0.12) 0px -12px 30px, rgba(255, 255, 255, 0.12) 0px 4px 6px, rgba(255, 255, 255, 0.17) 0px 12px 13px, rgba(255, 255, 255, 0.09) 0px -3px 5px;
+}
+main .datosDiv form .checkbox-wrapper-55 input[type=checkbox] {
+  visibility: hidden;
+  display: none;
+}
+main .datosDiv form .checkbox-wrapper-55 *,
+main .datosDiv form .checkbox-wrapper-55 ::after,
+main .datosDiv form .checkbox-wrapper-55 ::before {
+  box-sizing: border-box;
+}
+main .datosDiv form .checkbox-wrapper-55 .rocker {
+  display: inline-block;
+  position: relative;
+  /*
+  SIZE OF SWITCH
+  ==============
+  All sizes are in em - therefore
+  changing the font-size here
+  will change the size of the switch.
+  See .rocker-small below as example.
+  */
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+  color: #888;
+  width: 7em;
+  height: 4em;
+  overflow: hidden;
+  border-bottom: 0.5em solid #eee;
+}
+main .datosDiv form .checkbox-wrapper-55 .rocker-small {
+  font-size: 0.75em;
+}
+main .datosDiv form .checkbox-wrapper-55 .rocker::before {
+  content: "";
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #999;
+  border: 0.5em solid #eee;
+  border-bottom: 0;
+}
+main .datosDiv form .checkbox-wrapper-55 .switch-left,
+main .datosDiv form .checkbox-wrapper-55 .switch-right {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5em;
+  width: 3em;
+  transition: 0.2s;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+main .datosDiv form .checkbox-wrapper-55 .switch-left {
+  height: 2.4em;
+  width: 2.75em;
+  left: 0.85em;
+  bottom: 0.4em;
+  background-color: #ddd;
+  transform: rotate(15deg) skewX(15deg);
+}
+main .datosDiv form .checkbox-wrapper-55 .switch-right {
+  right: 0.5em;
+  bottom: 0;
+  background-color: #bd5757;
+  color: #fff;
+}
+main .datosDiv form .checkbox-wrapper-55 .switch-left::before,
+main .datosDiv form .checkbox-wrapper-55 .switch-right::before {
+  content: "";
+  position: absolute;
+  width: 0.4em;
+  height: 2.45em;
+  bottom: -0.45em;
+  background-color: #ccc;
+  transform: skewY(-65deg);
+}
+main .datosDiv form .checkbox-wrapper-55 .switch-left::before {
+  left: -0.4em;
+}
+main .datosDiv form .checkbox-wrapper-55 .switch-right::before {
+  right: -0.375em;
+  background-color: transparent;
+  transform: skewY(65deg);
+}
+main .datosDiv form .checkbox-wrapper-55 input:checked + .switch-left {
+  background-color: #0084d0;
+  color: #fff;
+  bottom: 0px;
+  left: 0.5em;
+  height: 2.5em;
+  width: 3em;
+  transform: rotate(0deg) skewX(0deg);
+}
+main .datosDiv form .checkbox-wrapper-55 input:checked + .switch-left::before {
+  background-color: transparent;
+  width: 3.0833em;
+}
+main .datosDiv form .checkbox-wrapper-55 input:checked + .switch-left + .switch-right {
+  background-color: #ddd;
+  color: #888;
+  bottom: 0.4em;
+  right: 0.8em;
+  height: 2.4em;
+  width: 2.75em;
+  transform: rotate(-15deg) skewX(-15deg);
+}
+main .datosDiv form .checkbox-wrapper-55 input:checked + .switch-left + .switch-right::before {
+  background-color: #ccc;
+}
+main .datosDiv form .checkbox-wrapper-55 input:focus + .switch-left {
+  color: #333;
+}
+main .datosDiv form .checkbox-wrapper-55 input:checked:focus + .switch-left {
+  color: #fff;
+}
+main .datosDiv form .checkbox-wrapper-55 input:focus + .switch-left + .switch-right {
+  color: #fff;
+}
+main .datosDiv form .checkbox-wrapper-55 input:checked:focus + .switch-left + .switch-right {
+  color: #333;
 }
 main .uploader {
   display: flex;
@@ -91,43 +224,70 @@ main .uploader .drop-area:hover {
 
 .container {
   display: none;
-  grid-template-rows: repeat(2, 30vh);
-  grid-template-columns: repeat(2, 48%);
-  gap: 4%;
+  grid-template-rows: 10vh 80vh;
 }
-.container .card {
-  display: none;
+.container h2 {
+  justify-self: center;
+}
+.container .cardContainer {
+  display: grid;
+  grid-template-rows: repeat(2, 35vh);
+  grid-template-columns: repeat(2, 30%);
+  gap: 4%;
+  justify-content: center;
+  height: 90vh;
+}
+.container .cardContainer .card {
+  display: grid;
   grid-template-rows: 1fr auto;
+  grid-template-columns: 60%;
   text-align: center;
   align-content: center;
   justify-content: center;
-  margin: 0 0;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
   gap: 3%;
   background-color: rgba(0, 66, 54, 0.8);
   color: white;
   border-radius: 10%;
+  padding: 3%;
+  box-sizing: border-box;
 }
-.container .card button {
+.container .cardContainer .card p#precioSeguro {
+  font-size: 2rem;
+}
+.container .cardContainer .card button {
   background: transparent;
-  color: white;
-  border: none;
   border-radius: 10%;
   padding: 0.5rem 1rem;
   text-align: center;
   cursor: pointer;
+  box-sizing: border-box;
+  font-weight: bolder;
 }
-.container .card button:hover {
+.container .cardContainer .card button:hover {
   border: 2px solid white;
   color: white;
   transform: scale(1.1);
 }
-.container .card:hover {
-  background-color: rgba(18, 0, 66, 0.3);
+.container .cardContainer .card button#contratar {
+  border: 2px solid green;
+  color: green;
+  box-shadow: rgba(0, 128, 0, 0.25) 0px 54px 55px, rgba(0, 128, 0, 0.12) 0px -12px 30px, rgba(0, 128, 0, 0.12) 0px 4px 6px, rgba(0, 128, 0, 0.17) 0px 12px 13px, rgba(0, 128, 0, 0.09) 0px -3px 5px;
+}
+.container .cardContainer .card button#descartar {
+  border: 2px solid red;
+  color: red;
+  box-shadow: rgba(255, 0, 0, 0.25) 0px 54px 55px, rgba(255, 0, 0, 0.12) 0px -12px 30px, rgba(255, 0, 0, 0.12) 0px 4px 6px, rgba(255, 0, 0, 0.17) 0px 12px 13px, rgba(255, 0, 0, 0.09) 0px -3px 5px;
+}
+.container .cardContainer .card:hover {
+  background-color: rgba(18, 0, 66, 0.6);
+  box-shadow: rgba(255, 255, 255, 0.25) 0px 54px 55px, rgba(255, 255, 255, 0.12) 0px -12px 30px, rgba(255, 255, 255, 0.12) 0px 4px 6px, rgba(255, 255, 255, 0.17) 0px 12px 13px, rgba(255, 255, 255, 0.09) 0px -3px 5px;
+}
+.container .banner {
+  display: flex;
 }
 
 .oculto {
-  display: none;
+  visibility: hidden;
 }
 
 .flex {

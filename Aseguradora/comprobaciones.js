@@ -2,11 +2,18 @@ import * as objetos from "./objetos.js";
 
 //Comprobaciones
 
-
+//Array en el que introduciremos los distintos errores con el id del elemento
+//al que querremos apuntar si existe. sólo se rellena con los errores producto
+//de la validación de los datos, se vacía y rellena en cada submit
 export var errorLog = [];
 
+
+//para reutilizar en las diversas comprobaciones, variable con la fecha presente.
 export var HOY = new Date();
 
+
+//Comprobamos que el nombre y el apellido tengan el formato correcto con Regex
+//Si no es asi, metemos al array de errores el error correspondiente
 export function comprobarNombreApellidos(nombreCliente, apellidoCliente) {
     const nombre = nombreCliente.match(/[a-zA-ZáéíóúÁÉÍÓÚ -]{2,30}/g);
     const apellido = apellidoCliente.match(/[a-zA-ZáéíóúÁÉÍÓÚ -]{2,30}/g);
@@ -34,39 +41,47 @@ export function comprobarNombreApellidos(nombreCliente, apellidoCliente) {
     return validez;
 }
 
+
+
+//Comprobamos que el Dni se componga de 8 numeros y que la letra coincida
+// con el número introducido
 export function comprobarDni(dni) {
-    let numero = dni.slice(0, 8);
-    let numeroCorrecto = numero.match(/[0-9]{8}/g);
-    if (!numeroCorrecto) {
-        errorLog.push(
-            {
-                error: "Numero DNI incorrecto",
-                nombre: "errorDni"
-            }
-        );
+    const numero = dni.slice(0, 8);
+    const letraDni = dni.slice(8, 9).toLowerCase();
+
+
+    //8 dígitos para el numero
+    if (!/^\d{8}$/.test(numero)) {
+        errorLog.push({
+            error: "Número DNI incorrecto",
+            nombre: "errorDni"
+        });
         return false;
     }
 
-    numero = parseInt(numero);
-    let letraDni = dni.slice(8, 9);
-    const letraObjetivo = objetos.restoDni.find((item) => item.letra === letraDni.toLowerCase());
+    const numeroInt = parseInt(numero, 10);
 
-    if (numeroCorrecto && !letraObjetivo) {
-        errorLog.push(
-            {
-                error: "Letra DNI incorrecta",
-                nombre: "errorDni"
-            }
-        );
+    //La comprobación de la letra se hace en función de la tabla de equivalencias
+    //fuente: https://www.interior.gob.es/opencms/es/servicios-al-ciudadano/tramites-y-gestiones/
+    const letraObjetivo = objetos.restoDni.find(item => item.resto === numeroInt % 23);
+
+    // Verificar si la letra calculada coincide con la letra proporcionada
+    if (!letraObjetivo || letraObjetivo.letra !== letraDni) {
+        errorLog.push({
+            error: "Letra DNI incorrecta",
+            nombre: "errorDni"
+        });
         return false;
     }
 
-    return (letraObjetivo && numero % 23 == letraObjetivo.resto);
-
+    // Si la letra coincide, el DNI es válido
+    return true;
 }
 
+
+//Comprobamos el Email con un Regex, fuente: w3.org
 export function comprobarEmail(email) {
-    const correcto = email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/g) //Fuente del regex w3.org
+    const correcto = email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/g) 
 
     if (!correcto) {
         errorLog.push(
@@ -82,11 +97,14 @@ export function comprobarEmail(email) {
 }
 
 
+
+//Comprobación de que el número de teléfono tenga el formato español
+//mediante regex de manera simple
 export function comprobarTelefono(telefono) {
-    //comprobamos que el primer dígito sea un 6 o un 7 y que contenga 9 dígitos en total.
+    //Comprobamos que el primer dígito sea un 6 o un 7 y que contenga 9 dígitos en total.
     //(6 o 7 y 8 dígitos cualquiera entre 0-9)
     telefono = telefono.toString();//convertimos a string para hacer una comprobacion mediante regex
-    const correcto = telefono.match(/^[6-7]{1}[0-9]{8}$/g);
+    const correcto = telefono.match(/^[6-7][0-9]{8}$/g);
 
     if (!correcto) {
         errorLog.push(
@@ -104,17 +122,16 @@ export function comprobarTelefono(telefono) {
 
 
 //Comprobamos que la fecha que le pasamos sea anterior a la actual según el rango en años.
-// (Ej: Para la mayoría de edad, el rango son 18 años).
+// (Ej.: Para la mayoría de edad, el rango son 18 años).
 export function comprobarAntiguedad(fecha, rango, comprobacion) {
-    const fechaNacimiento = new Date(fecha);
-    const fechaLimite = new Date();
-    fechaLimite.setFullYear(fechaLimite.getFullYear() - rango); // Restamos los años necesarios
+    const fechaObjetivo = new Date(fecha);
+    HOY.setFullYear(HOY.getFullYear() - rango); // Restamos los años necesarios
 
-    if (fechaNacimiento > fechaLimite || isNaN(fechaNacimiento.getTime())) {
-        // Si la fecha de nacimiento está después de la fecha límite
+    if (fechaObjetivo > HOY || isNaN(fechaObjetivo.getTime())) {
+        // Si la fecha objetivo está después de la fecha límite (fecha presente menos el rango que se pasa por parametro)
         switch (comprobacion) {
             case "nacimiento":
-                if (isNaN(fechaNacimiento.getTime())) {
+                if (isNaN(fechaObjetivo.getTime())) {
                     errorLog.push({
                         error: "Por Favor introduzca su fecha de nacimiento",
                         nombre: "errorNacimiento"
@@ -125,7 +142,6 @@ export function comprobarAntiguedad(fecha, rango, comprobacion) {
                         nombre: "errorNacimiento"
                     });
                 }
-
                 break;
             case "emisionCarnet":
                 errorLog.push({
@@ -146,6 +162,9 @@ export function comprobarAntiguedad(fecha, rango, comprobacion) {
 }
 
 
+
+//Comprobamos que la matrícula tiene el formato correcto y no
+//contiene ninguna de la letras 'prohibidas'
 export function comprobarMatricula(matricula) {
     const letrasProhibidas = ["A", "CH", "E", "I", "L", "Ñ", "O", "Q", "U"];
     const numeroStr = matricula.slice(0, 4);
@@ -154,6 +173,7 @@ export function comprobarMatricula(matricula) {
     const letra = letras.split('');
 
     switch (true) {
+        //si la longitud de la matricula es diferente de 7 (4 nums 3 letras), devolvemos false 
         case (matricula.length !== 7):
             errorLog.push(
                 {
@@ -163,6 +183,8 @@ export function comprobarMatricula(matricula) {
 
             );
             return false;
+        
+        //sobre todo para numero negativos por si el cliente mete un -750 por ejemplo
         case (numero > 9999 || numero < 0):
             errorLog.push(
                 {
@@ -171,6 +193,7 @@ export function comprobarMatricula(matricula) {
                 }
             );
             return false;
+        //si hay menos de 3 letras o alguna está entre las prohibidas
         case (letras.length < 3 || letra.some(letra => letrasProhibidas.includes(letra))):
             errorLog.push(
                 {
@@ -185,9 +208,13 @@ export function comprobarMatricula(matricula) {
     }
 }
 
+
+//Comprobamos el código postal en funcion del rango asociado a la provincia que ha seleccionado el cliente
 export function comprobarCodigoPostal(codigoPostal, provinciaCliente) {
+    //establecemos la provincia seleccionada
     let provincias = objetos.codigosPostales.find((item) => item.provincia === provinciaCliente);
 
+    //si la provincia es válida comprobamos que el codigo postal esté en el rango de esa provincia
     if (provincias) {
         let inicioRango = provincias.inicio;
         let finRango = provincias.fin;
@@ -210,7 +237,7 @@ export function comprobarCodigoPostal(codigoPostal, provinciaCliente) {
     } else {
         errorLog.push(
             {
-                error: "Codigo Postal Incorrecto",
+                error: "El código postal no pertenece a la provincia",
                 nombre: "errorCodigoPostal"
             }
         );
@@ -219,6 +246,10 @@ export function comprobarCodigoPostal(codigoPostal, provinciaCliente) {
 
 }
 
+
+
+//Comprobamos la extension de la foto subida por el cliente en el mismo
+//momento de la subida antes del submit mediante un su tipo o un regex segun el caso
 export function comprobarFotoVehiculo(fotoVehiculo) {
     const extensionesPermitidas = ["image/jpeg", "image/jpg"];
     if (!extensionesPermitidas.includes(fotoVehiculo.type)) {
@@ -228,7 +259,7 @@ export function comprobarFotoVehiculo(fotoVehiculo) {
         });
         return false;
     }
-    if (!/\.(jpg|jpeg)$/i.test(fotoVehiculo.name)) {
+    if (!/\.(jpg|jpeg)$/i.test(fotoVehiculo.name)) { //regex cortesía de fracesc sorà quevedo
         errorLog.push({
             error: "Extensión de archivo incorrecta. Solo se permiten imágenes .jpg o .jpeg",
             nombre: "errorImagen"
@@ -239,6 +270,8 @@ export function comprobarFotoVehiculo(fotoVehiculo) {
     return true;
 }
 
+
+//Validamos si el cliente ha subido una foto o no en el submit
 export function comprobarFoto(fotoVehiculo, fotoSubida) {
 
     if(fotoSubida){
@@ -252,5 +285,19 @@ export function comprobarFoto(fotoVehiculo, fotoSubida) {
         return false;
     }
     
+    return true;
+}
+
+
+//Validamos que haya aceptado los términos y condiciones
+export function validarCheckbox(checkbox){
+    //si el checkbox no esta seleccionado introducimos un error para que se acepten los términos y condiciones
+    if(!checkbox.checked){
+        errorLog.push({
+            nombre: "errorCheckbox",
+            error: "Debe Aceptar los términos y condiciones."
+        })
+        return false;
+    }
     return true;
 }
