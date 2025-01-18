@@ -244,7 +244,6 @@ export function comprobarFoto(fotoVehiculo, fotoSubida) {
     if(fotoSubida){
         return true;
     }
-
     if (!fotoVehiculo || !fotoSubida) {
         errorLog.push({
             nombre: "errorImagen",
