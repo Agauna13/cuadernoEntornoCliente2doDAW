@@ -365,5 +365,3 @@ jugar();
 Se ha retocado el html para añadir las funciones que muestran la siguiente pieza ademas de un titulo y un poco de estilo.
 
 */
-
-
