@@ -1,22 +1,13 @@
 //Con una función creamos la estructura principal, creando a parte los div's, títulos y botones.
-export function createLists(){
+export function createLists(listId, title){
     let tablero = document.getElementById('tablero');
-    let todo = createDivs("todo", "list");
-    todo.insertAdjacentElement("afterbegin", createTitle("Por Hacer"));
-    todo.insertAdjacentElement("beforeend", createButton("todoButton", "add-task", "+ Agregar tarea"));
-    todo.insertAdjacentElement("beforeend", createButton("toDoDeleteButton", "remove-task", "- Eliminar tarea"));
-    let inProgress = createDivs("in-progress", "list");
-    inProgress.insertAdjacentElement("afterbegin", createTitle("En Progreso"));
-    inProgress.insertAdjacentElement("beforeend", createButton("inProgressButton", "add-task", "+ Agregar tarea"));
-    inProgress.insertAdjacentElement("beforeend", createButton("inProgressDeleteButton", "remove-task", "- Eliminar tarea"));
-    let done = createDivs("done", "list");
-    done.insertAdjacentElement("afterbegin", createTitle("Hechas"));
-    done.insertAdjacentElement("beforeend", createButton("doneButton", "add-task", "+ Agregar tarea"));
-    done.insertAdjacentElement("beforeend", createButton("doneDeleteButton", "remove-task", "- Eliminar tarea"));
+    let list = createDivs(listId, "list");
+    list.insertAdjacentElement("afterbegin", createTitle(title));
+    list.insertAdjacentElement("beforeend", createButton(listId+"Button", "add-task", "+ Agregar tarea"));
+    list.insertAdjacentElement("beforeend", createButton(listId+"DeleteButton", "remove-task", "- Eliminar tareas"));
+    list.insertAdjacentElement("beforeend", createButton(listId+"DeleteListButton", "remove-list", "- Eliminar Lista"));
 
-    tablero.insertAdjacentElement("beforeend", todo);
-    tablero.insertAdjacentElement("beforeend", inProgress);
-    tablero.insertAdjacentElement("beforeend", done);
+    tablero.insertAdjacentElement("beforeend", list);
 
 }
 
@@ -39,11 +30,10 @@ function createTitle(titleContent){
 
 
 //Creamos los botones pasando por parámetro el id, clase y contenido del mismo.
-function createButton(idButton, classButton, buttonText){
+export function createButton(idButton, classButton, buttonText){
     let button = document.createElement('div');
     button.setAttribute('id', idButton);
     button.setAttribute('class', classButton);
     button.innerText = buttonText;
-    console.log(idButton, classButton);
     return button;
 }
