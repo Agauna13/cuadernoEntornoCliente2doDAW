@@ -1,44 +1,68 @@
-function addDiv() {
-    const div = document.createElement('div');
-    document.body.insertAdjacentElement("beforeend", div);
+//1 página DOM navigation
+
+let div = document.querySelector('div'); //o document.body.firstElementChild('div');
+
+let ul = document.querySelector('ul');
+
+let ultimoLi = ul.lastElementChild;
+
+
+
+//2 página DOM navigation
+
+//1ra pregunta es verdadera, porque no tiene más hermanos el ultimo elemento de un contenedor
+//2da pregunta es falsa porque podemos tener un nodo de texto como salto de linea
+
+
+//3 pág DOM navigation
+let row = document.querySelectorAll('tr');
+let table = document.querySelector('table');
+console.log(row.length);
+console.log(table.rows[0].cells.length);
+
+
+/*for (let i = 0; i < row.length; i++) {
+    //let tdata = row[i].children;
+    let currentRow = table.rows[i];
+
+    currentRow.cells[i].style.backgroundColor = 'red';
+    currentRow.cells[row.length - 1 - i].style.backgroundColor = 'red';
+
+
+    //tdata[i].style.background = "red";
+    //tdata[tdata.length - 1 - i].style.background = "blue";
+
+}*/
+
+/*for (let i = 0; i < row.length; i++) {
+    //let tdata = row[i].children;
+    let currentRow = table.rows[i];
+    currentRow.cells[i].style.backgroundColor = 'red';
+    for (let j = 0; 0< currentRow.cells.length; j++) {
+        table.rows[j].cells[i].style.backgroundColor = "green";
+    }    //tdata[i].style.background = "red";
+    //tdata[tdata.length - 1 - i].style.background = "blue";
+
+}*/
+for(let i = 0, j = row.length -1; i<row.length; i++, j--){
+    table.rows[j].cells[i].style.backgroundColor = "green";
 }
 
-let count = 10;
-let position = 0;
 
-function counter(step) {
-    // Crear un nuevo div
-    addDiv();
-    let newDiv = document.body.lastChild;
-
-    // Modificar valores según el paso (arriba o abajo)
-    count += step;
-    position += (50 * step);
-    console.log(step);
-    console.log(position);
-
-    // Establecer estilos y contenido
-    count % 2 == 0 ? newDiv.classList.add('color') : newDiv.classList.remove('color');
-    newDiv.textContent = count;
-    newDiv.style.position = 'absolute';
-    newDiv.style.top = position + 'px';
-    newDiv.style.left = position + 'px';
+for(let i = row.length - 1, j = 0; i>=0; i--, j++){
+    table.rows[j].cells[i].style.backgroundColor = "blue";
 }
 
-function dibujar() {
-    let i = 0;
-    const interval = setInterval(() => {
-        if (i < 10) {
-            counter(-1); // Decrementa (forma la primera mitad de la V)
-        } else if (i >= 10) {
-            counter(1); // Incrementa (forma la segunda mitad de la V)
-        } else {
-            clearInterval(interval); // Detener cuando se haya dibujado toda la "V"
+for(let i = 0, j = 0; i<row.length; i++, j++){
+    table.rows[j].cells[i].style.backgroundColor = "blue";
+}
+/*for(let j = 0; j<tdata.length; j++){
+        if(j === i){
+            tdata[j].style.background = "red";
         }
-        i++;
-    }, 1000); // Intervalo de 1 segundo
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    dibujar();
-});
+    }
+    for(let k = tdata.length; k>=0; k--){
+        let inv = i-k;
+        tdata[inv].style.background = "blue";
+    
+    }*/
