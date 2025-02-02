@@ -99,7 +99,7 @@ function insertPokemonCard(name, id, ability, image){
 }
 
 // Realizamos una solicitud a la API de Pokémon para obtener los primeros 10 Pokémon
-fetch('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0')
+/*fetch('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0')
   // Cuando la respuesta llega, convertimos los datos en formato JSON
   .then(response => response.json())
 
@@ -107,7 +107,7 @@ fetch('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0')
   .then(data => {
     // `data.results` es un array que contiene objetos con `name` y `url` de cada Pokémon
     // Ahora usamos `map()` para recorrer cada Pokémon y hacer una nueva solicitud con su URL
-    let promises = data.results.map(pokemon => 
+    let promises = data.results.map(pokemon =>
       // Hacemos una nueva solicitud para obtener los detalles de cada Pokémon
       fetch(pokemon.url).then(res => res.json())
     );
@@ -126,11 +126,46 @@ fetch('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0')
   })
 
   // Si ocurre algún error en cualquier parte de la cadena de promesas, lo capturamos aquí
+  .catch(error => console.error("Error:", error));*/
+
+
+
+function fetchApi(url){
+
+  let counter = 0;
+  fetch(url)
+  // Cuando la respuesta llega, convertimos los datos en formato JSON
+  .then(response => response.json())
+
+  // Ahora `data` contiene la información de los Pokémon
+  .then(data => {
+    // `data.results` es un array que contiene objetos con `name` y `url` de cada Pokémon
+    // Ahora usamos `map()` para recorrer cada Pokémon y hacer una nueva solicitud con su URL
+    let promises = data.results.map(pokemon =>
+      // Hacemos una nueva solicitud para obtener los detalles de cada Pokémon
+      fetch(pokemon.url).then(res => res.json())
+    );
+
+    // `Promise.all()` espera a que todas las promesas en `promises` se resuelvan
+    return Promise.all(promises);
+  })
+
+  // Cuando todas las solicitudes de los Pokémon terminan, recibimos un array con sus datos completos
+  .then(pokemons => {
+    // Recorremos la lista de Pokémon ya con sus datos completos
+    pokemons.forEach(pokemon => {
+      counter++;
+        insertPokemonCard(pokemon.name, pokemon.id, pokemon.abilities[0].ability.name, pokemon.sprites.front_default);
+        //console.log(`Nombre: ${pokemon.name}, ID: ${pokemon.id}, Peso: ${pokemon.weight}`);
+    });
+    console.log(counter + " Pokemons encontrados");
+  })
+
+  // Si ocurre algún error en cualquier parte de la cadena de promesas, lo capturamos aquí
   .catch(error => console.error("Error:", error));
-
-
-
-
+}
   
 
   //https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/132.ogg  ruidito del pokemon
+
+  fetchApi('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0');
