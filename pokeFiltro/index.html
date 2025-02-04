@@ -16,13 +16,18 @@
 
         <label for="main"><strong>Seleccione un filtro</strong></label>
         <select name="main" id="mainSelect">
+            <option value="" selected disabled>Seleccione un filtro</option>
             <option value="type">Tipo</option>
             <option value="ability">Habilidad</option>
-            <option value="pokemon">Nombre</option>
-            <option value="pokemon">ID</option>
+            <option value="pokemon">Nombre o ID</option>
         </select>
         <select name="second" id="secondarySelect" class="hidden">
         </select>
+        <div class="input hidden">
+            <input type="text" placeholder="Inserte ID o Nombre" id="searchValue">
+            <button id="searchBtn">Buscar</button>
+        </div>
+        
 
         <div class="container"></div>
     </main>
