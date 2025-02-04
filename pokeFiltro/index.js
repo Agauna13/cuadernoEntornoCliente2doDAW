@@ -3,7 +3,7 @@
  * 
  * Filtrar por tipo de pokemon
  * 
- * Fultrar pokemon por habilidad
+ * Filtrar pokemon por habilidad
  * 
  * Extraer info de las especies (como si fuera una wiki)
  * 
@@ -15,8 +15,8 @@
  * 
  * 
  */
-
-
+import "./domComponents.js";
+/*
 
 async function fetchApi(url) {
     try {
@@ -89,3 +89,6 @@ function fetchApi(url){
     //https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/132.ogg  ruidito del pokemon
   
     fetchApi('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0');*/
+
+
+  

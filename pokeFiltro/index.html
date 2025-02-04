@@ -14,7 +14,17 @@
     <main>
         <h2>Bienvenido al filtro de pokemons.</h2>
 
-        
+        <label for="main"><strong>Seleccione un filtro</strong></label>
+        <select name="main" id="mainSelect">
+            <option value="type">Tipo</option>
+            <option value="ability">Habilidad</option>
+            <option value="pokemon">Nombre</option>
+            <option value="pokemon">ID</option>
+        </select>
+        <select name="second" id="secondarySelect" class="hidden">
+        </select>
+
+        <div class="container"></div>
     </main>
     
     <script src="index.js" type="module"></script>
