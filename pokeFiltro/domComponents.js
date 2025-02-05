@@ -16,18 +16,14 @@ export function insertPokemonCard(name, id, ability, image) {
   card.insertAdjacentHTML(
     "afterbegin",
     "<h2><strong>" +
-      name.charAt(0).toUpperCase() +
-      name.slice(1) +
-      "</strong></h2>"
+    name.charAt(0).toUpperCase() +
+    name.slice(1) +
+    "</strong></h2>"
   );
   card.insertAdjacentHTML("beforeend", "<img src=" + image + "></img>");
   card.insertAdjacentHTML(
     "beforeend",
     "<p><strong>Pokemon ID: " + id + "</strong></p>"
-  );
-  card.insertAdjacentHTML(
-    "beforeend",
-    "<p><strong>Ability: " + ability + "</strong></p>"
   );
   card.insertAdjacentHTML(
     "beforeend",
@@ -50,7 +46,7 @@ export async function fetchByType(type) {
   return pokemons;
 }
 
- export async function fetchPokemon(nombreId) {
+export async function fetchPokemon(nombreId) {
   let url = `https://pokeapi.co/api/v2/pokemon/${nombreId}`;
 
   const response = await fetch(url);
