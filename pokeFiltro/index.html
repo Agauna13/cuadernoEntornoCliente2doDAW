@@ -20,15 +20,16 @@
             <option value="type">Tipo</option>
             <option value="ability">Habilidad</option>
             <option value="pokemon">Nombre o ID</option>
+            <option value="pokemon?limit=1025&offset=0">Todos Los Pokemons</option>
         </select>
         <select name="second" id="secondarySelect" class="hidden">
         </select>
         <div class="input hidden">
             <input type="text" placeholder="Inserte ID o Nombre" id="searchValue">
-            <button id="searchBtn">Buscar</button>
+            <button id="searchBtn" class="button-44" role="button">Buscar</button>
         </div>
         
-
+        <p id="results"></p>
         <div class="container"></div>
     </main>
     

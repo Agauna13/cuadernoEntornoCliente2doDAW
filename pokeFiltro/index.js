@@ -15,7 +15,21 @@
  * 
  * 
  */
-import "./domComponents.js";
+import { 
+  mainSelect, 
+  secSelect, 
+  container, 
+  insertPokemonCard, 
+  fetchByType, 
+  fetchPokemon, 
+  fetchByAbility, 
+  fetchData, 
+  fillSelect, 
+  addButtonListener 
+} from "./domComponents.js";
+
+
+var results = 0;
 /*
 
 async function fetchApi(url) {
@@ -91,4 +105,105 @@ function fetchApi(url){
     fetchApi('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0');*/
 
 
-  
+  // Evento de cambio en el primer select
+mainSelect.addEventListener("change", async (e) => {
+  const selectedValue = e.target.value;
+  // Rellenar el segundo select basado en el filtro elegido
+  if (selectedValue !== "pokemon") {
+    let inpt = document.querySelector(".input");
+    inpt.classList.add("hidden");
+    inpt.classList.remove("shown");
+    fillSelect(selectedValue);
+  } else {
+    secSelect.classList.add("hidden");
+    secSelect.classList.remove("shown");
+    let inpt = document.querySelector(".input");
+    inpt.classList.remove("hidden");
+    inpt.classList.add("shown");
+  }
+
+  if (selectedValue === "pokemon?limit=1025&offset=0") {
+    secSelect.classList.add("hidden");
+    secSelect.classList.remove("shown");
+    const pokemons = await fetchData("pokemon", "?limit=1025&offset=0");
+    results *= 0;
+
+    const allPokemons = await Promise.all(
+      pokemons.map((pokemon) => fetch(pokemon.url).then((res) => res.json()))
+    );
+
+    allPokemons.forEach(pokemon =>{
+      results++;
+      insertPokemonCard(pokemon.name, pokemon.id, pokemon.abilities?.[0]?.ability?.name || "Unknown", `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemon.id}.gif`);
+    });
+    document.querySelector("#results").innerText = `Found Pokemons: ${results}`;
+    addButtonListener();
+  }
+});
+
+// Evento de cambio en el segundo select
+secSelect.addEventListener("change", async (e) => {
+  container.innerHTML = ""; // Limpiar los resultados previos
+  const selectedValue = e.target.value;
+  const mainFilter = mainSelect.value;
+
+  if (mainFilter === "type") {
+    // Obtener los pokemons según el tipo
+    const pokemons = await fetchByType(selectedValue);
+    results *= 0;
+    pokemons.forEach((pokemon) => {
+      results++;
+      insertPokemonCard(
+        pokemon.name,
+        pokemon.id,
+        pokemon.abilities[0].ability.name,
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/" +
+          pokemon.id +
+          ".gif"
+      );
+    });
+    document.querySelector("#results").innerText = `Found Pokemons: ${results}`;
+    addButtonListener();
+  } else if (mainFilter === "ability") {
+    // Obtener los pokemons según la habilidad
+    const pokemons = await fetchByAbility(selectedValue);
+    results *= 0;
+    pokemons.forEach((pokemon) => {
+      results++;
+      insertPokemonCard(
+        pokemon.name,
+        pokemon.id,
+        pokemon.abilities[0].ability.name,
+        "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/" +
+          pokemon.id +
+          ".gif"
+      );
+    });
+    addButtonListener();
+  }
+
+  document.querySelector("#results").innerText = `Found Pokemons: ${results}`;
+});
+
+document.querySelector("#searchBtn").addEventListener("click", async (e) => {
+  results *= 0;
+  container.innerHTML = "";
+  let nombreId = document.querySelector("#searchValue").value;
+  const pokemon = await fetchPokemon(nombreId);
+
+  if (!pokemon) {
+    container.innerHTML =
+      "<p style='color: red; font-weight: bold;'>No se encontró un Pokemon con ese nombre o ID.</p>";
+    return;
+  }
+  insertPokemonCard(
+    pokemon.name,
+    pokemon.id,
+    pokemon.abilities[0].ability.name,
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/" +
+      pokemon.id +
+      ".gif"
+  );
+  addButtonListener();
+  document.querySelector("#results").innerText = "";
+});
