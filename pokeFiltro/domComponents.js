@@ -5,32 +5,25 @@ export const container = document.querySelector(".container");
 
 
 // Función para insertar una carta de Pokémon en el DOM
-export function insertPokemonCard(name, id, ability, image) {
-  let card = document.createElement("div");
-  let button = document.createElement("button");
-  button.setAttribute("class", "delete");
-  button.classList.add("button-44");
-  button.setAttribute("role", "button");
-  button.innerText = "Delete";
-  card.setAttribute("class", "card");
-  card.insertAdjacentHTML(
-    "afterbegin",
-    "<h2><strong>" +
-    name.charAt(0).toUpperCase() +
-    name.slice(1) +
-    "</strong></h2>"
-  );
-  card.insertAdjacentHTML("beforeend", "<img src=" + image + "></img>");
-  card.insertAdjacentHTML(
-    "beforeend",
-    "<p><strong>Pokemon ID: " + id + "</strong></p>"
-  );
-  card.insertAdjacentHTML(
-    "beforeend",
-    "<p><strong>Ability: " + ability + "</strong></p>"
-  );
-  card.insertAdjacentElement("beforeend", button);
-  container.insertAdjacentElement("beforeend", card);
+export function insertPokemonCard(name, id, ability, image, flavorText) {
+  name = name.charAt(0).toUpperCase() + name.slice(1);
+  container.insertAdjacentHTML("beforeend", `<div class="card">
+        <div class="cardHeader">
+            <p>${name}</p>
+            <button class="delete">&#10006</button>
+        </div>
+        <div class="cardBody">
+            <div class="cardImage">
+                <img src="${image}" alt="">
+                <p><strong>Ability:</strong> ${ability}</p>
+                <p><strong>ID:</strong> ${id}</p>
+            </div>
+            <div class="cardInfo">
+                <p>${flavorText}</p>
+            </div>
+        </div>
+
+    </div>`);
 }
 
 // Función para obtener datos por tipo
@@ -101,6 +94,35 @@ export async function fillSelect(param) {
       option.innerHTML = item.name;
       secSelect.appendChild(option);
     });
+  }
+}
+
+
+export async function fetchFlavorText(pokemonIdOrName) {
+  try {
+      const url = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIdOrName}/`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("No se encontró el Pokémon");
+
+      const data = await response.json();
+
+      // Buscar el flavor text en español
+      const flavorEntry = data.flavor_text_entries.find(entry => entry.language.name === "es");
+
+      return flavorEntry ? flavorEntry.flavor_text.replace(/\n|\f/g, " ") : "Otro bicho de éstos mas, son todos una adaptación japonesa de alguna animal real con cosas raras extra";
+  } catch (error) {
+      console.error("Error obteniendo el flavor text:", error);
+      return "Otro bicho de éstos mas, son todos una adaptación japonesa de alguna animal real con cosas raras extra";
+  }
+}
+
+// Función para verificar si la imagen existe usando fetch
+export async function checkImageExists(url) {
+  try {
+      const response = await fetch(url, { method: "HEAD" });
+      return response.ok; // Retorna true si la imagen existe, false si no
+  } catch (error) {
+      return false; // Retorna false si hay un error en la petición
   }
 }
 
