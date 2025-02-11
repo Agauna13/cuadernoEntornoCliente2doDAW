@@ -1,0 +1,91 @@
+{
+    "curriculum_vitae": {
+      "informacion_personal": {
+        "nombre_completo": "Alan Adamson",
+        "fecha_nacimiento": "07-07-1990",
+        "nacionalidad": "Argentino",
+        "contacto": {
+          "email": "agauna@cifpfbmoll.eu",
+          "telefono": "666556655",
+          "direccion": "Calle falsa, 123, 07069 Palma",
+          "github": "github.com/agauna13"
+        }
+      },
+      
+      "educacion": [
+        {
+          "titulo": "Grado superior en desarrollo de aplicaciones web",
+          "institucion": "Cifp Borja Moll, Palma",
+          "periodo": "2023-2025",
+          "especializacion": "Desarrollo de Software"
+        },
+        {
+          "titulo": "Bootcamp Desarrollo Full Stack",
+          "institucion": "Le baguette Paris",
+          "periodo": "2022"
+        }
+      ],
+      
+      "experiencia_laboral": [
+        {
+          "posicion": "Programador Junior",
+          "empresa": "AlanDevelopers S.A.U",
+          "periodo": "2025-Presente",
+          "responsabilidades": [
+            "Desarrollo de aplicaciones web con React y Node.js",
+            "Mantenimiento de bases de datos MySQL",
+            "Implementación de tests unitarios con Jest"
+          ]
+        },
+        {
+          "posicion": "Prácticas Desarrollo Web",
+          "empresa": "Joaquin Enterprises",
+          "periodo": "2021 (6 meses)",
+          "responsabilidades": [
+            "Maquetación HTML/CSS",
+            "Implementación de funcionalidades JavaScript",
+            "Soporte técnico a clientes"
+          ]
+        }
+      ],
+      
+      "habilidades_tecnicas": {
+        "lenguajes": ["JavaScript", "Python", "HTML5", "CSS3", "SQL"],
+        "frameworks": ["React", "Node.js", "Express", "Django"],
+        "herramientas": ["Git", "Docker", "Postman", "Webpack"],
+        "bases_de_datos": ["MySQL", "MongoDB"]
+      },
+      
+      "proyectos": [
+        {
+          "nombre": "TaskManager App",
+          "descripcion": "Aplicación web de gestión de tareas con autenticación JWT",
+          "tecnologias": ["React", "Node.js", "MongoDB"],
+          "enlace": "github.com/carlos-martinez-dev/task-manager"
+        },
+        {
+          "nombre": "E-commerce CMS",
+          "descripcion": "Sistema de gestión de contenido para tienda online",
+          "tecnologias": ["Python", "Django", "PostgreSQL"],
+          "enlace": "github.com/carlos-martinez-dev/ecommerce-cms"
+        }
+      ],
+
+      "idiomas": [
+        {
+          "idioma": "Español",
+          "nivel": "Nativo"
+        },
+        {
+          "idioma": "Inglés",
+          "nivel": "B2 (First Certificate)"
+        }
+      ],
+      
+      "otros": {
+        "intereses": ["Inteligencia Artificial", "Open Source Projects", "Ciberseguridad"],
+        "voluntariado": "Profesor de JSON Avanzado, Universidad de Lepe",
+        "disponibilidad": "Inmediata"
+      }
+    }
+  }
