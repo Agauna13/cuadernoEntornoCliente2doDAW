@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuarios</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .user { cursor: pointer; padding: 10px; border: 1px solid #ddd; margin: 5px; }
+        .selected { background-color: #f0f0f0; }
+        .post-title { cursor: pointer; color: blue; text-decoration: underline; }
+        .comments { display: none; margin-left: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Usuarios</h1>
+    <div id="users"></div>
+    <h2>Publicaciones</h2>
+    <ol id="posts"></ol>
+    
+    <script>
+        async function fetchUsers() {
+            const response = await fetch('https://jsonplaceholder.typicode.com/users');
+            const users = await response.json();
+            const usersContainer = document.getElementById('users');
+            
+            users.forEach(user => {
+                const div = document.createElement('div');
+                div.classList.add('user');
+                div.innerHTML = `<strong>${user.name}</strong><br>Email: ${user.email}<br>Ciudad: ${user.address.city}<br>Empresa: ${user.company.name}`;
+                div.addEventListener('click', () => fetchPosts(user.id, div));
+                usersContainer.appendChild(div);
+            });
+        }
+        
+        async function fetchPosts(userId, selectedDiv) {
+            document.querySelectorAll('.user').forEach(div => div.classList.remove('selected'));
+            selectedDiv.classList.add('selected');
+            
+            const response = await fetch(`https://jsonplaceholder.typicode.com/users/${userId}/posts`);
+            const posts = await response.json();
+            const postsContainer = document.getElementById('posts');
+            postsContainer.innerHTML = '';
+            
+            posts.forEach(post => {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="post-title">${post.title}</span>`;
+                li.addEventListener('click', () => fetchComments(post.id, li));
+                postsContainer.appendChild(li);
+            });
+        }
+        
+        async function fetchComments(postId, postElement) {
+            let commentsContainer = postElement.querySelector('.comments');
+            if (commentsContainer) {
+                commentsContainer.style.display = commentsContainer.style.display === 'none' ? 'block' : 'none';
+                return;
+            }
+            
+            const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}/comments`);
+            const comments = await response.json();
+            commentsContainer = document.createElement('ul');
+            commentsContainer.classList.add('comments');
+            
+            comments.forEach(comment => {
+                const commentLi = document.createElement('li');
+                commentLi.innerHTML = `<strong>${comment.email}</strong>: ${comment.name}`;
+                commentsContainer.appendChild(commentLi);
+            });
+            
+            postElement.appendChild(commentsContainer);
+            commentsContainer.style.display = 'block';
+        }
+        
+        fetchUsers();
+    </script>
+</body>
+</html>
