@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body{
+    width: 1200px;
+    margin: 0 auto;
+    font-family: 'kanit';
+}
+
+#cvHeader{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 3%;
+    background-color: rgba(133, 218, 255, 0.605);
+    padding: 2rem;
+    box-sizing: border-box;
+    
+}
+
+#cvHeader #nombre{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    font-size: 2rem;
+}
+
+#nombre img{
+    display: flex;
+    width: 20%;
+    border-radius: 30%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+#nombre h1{
+    display: flex;
+    align-self: flex-end;
+}
+
+#cvHeader #contacto{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+}
+
+
+#cvBody {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+    align-items: flex-start;
+    width: 100%;
+    justify-self: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    padding-right: 2rem;
+    width: max-content;
+    width: 65%;
+}
+
+aside {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(133, 218, 255, 0.605);
+    height: 100%;
+}
+
+hr{
+    width: 100%;
+    margin: 0;
+}
+
+.habilidades{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 4%;
+    width: 100%;
+}
+
+.categoria{
+    width: 20%;
+    margin: 1%;
+}
