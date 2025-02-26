@@ -1,0 +1,43 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: white;
+}
+
+.contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.usuario, .publicacion {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: 250px;
+  background-color: #f9f9f9;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.publicacion {
+  width: 50%;
+  margin: 20px auto;
+}
+
+.comentario {
+  margin-top: 10px;
+  background: #e3f2fd;
+  padding: 5px;
+}
+
+.seleccionado {
+  background-color: #4be0c5;
+}
+
+li {
+  min-height: 3vh;
+  margin-bottom: 1vh;
+  cursor: pointer;
+}/*# sourceMappingURL=styles.css.map */
