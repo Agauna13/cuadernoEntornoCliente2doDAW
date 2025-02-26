@@ -112,4 +112,32 @@ h2{
 
 #container{
     color: white;
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
+
+.card{
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    border: 3px solid rgba(255, 232, 31, 1);
+    width: 25vw;
+}
+
+.cardHeader{
+    background-color: rgba(255, 232, 31, 1);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardBody{
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-weight: bolder;
 }
